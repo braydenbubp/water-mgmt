@@ -1,8 +1,8 @@
 {
-  "name": "water-mgmt",
+  "name": "25-27-swe-water-management",
   "private": true,
   "version": "1.0.0",
-  "author": "Dustin Lawson",
+  "author": "25-27-swe-water-management: Brayden, Cody, Dustin, J, and Solomon",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
