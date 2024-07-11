@@ -12,15 +12,15 @@ function Signin() {
         margin: '0 auto',
         zIndex: 1,
         minHeight: '25rem',
-        width: '100%',
+        width: '25%',
         minWidth: '30rem',
         paddingBlock: '0 5rem',
       }}
     >
-      <h1>Hi there!</h1>
-      <p>Click the button below to login!</p>
-      <Button type="button" size="lg" className="copy-btn" onClick={signIn}>
-        Sign In
+      <h1>Welcome to Water Management</h1>
+      <p>In this app you will find all things water and management. Possibly even both</p>
+      <Button type="button" variant="success" size="lg" className="copy-btn" onClick={signIn}>
+        Log in
       </Button>
     </div>
   );
