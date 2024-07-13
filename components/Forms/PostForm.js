@@ -78,21 +78,21 @@ export default function PostForm({ obj }) {
       {/* category SELECT  */}
       <FloatingLabel controlId="floatingSelect" label="category">
         <Form.Select
-          aria-label="category"
+          // aria-label="category"
           name="category_id"
           onChange={handleChange}
           className="mb-3"
           value={formInput.category}
           required
         >
-          <option value="">Select an category</option>
+          <option value="" disabled>Select a category</option>
           {
             categories.map((category) => (
               <option
-                key={category.firebaseKey}
-                value={category.firebaseKey}
+                key={category.category}
+                value={category.category}
               >
-                {category}
+                {category.category}
               </option>
             ))
           }
