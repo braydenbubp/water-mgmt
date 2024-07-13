@@ -1,10 +1,10 @@
-import { clientCredentials } from '../utils/client';
+// import { clientCredentials } from '../utils/client';
 
-const endpoint = clientCredentials.databaseURL;
+const endpoint = 'http://localhost:8000';
 
 // GET ALL POSTS
 const getPosts = () => new Promise((resolve, reject) => {
-  fetch(`${endpoint}/posts.json`, {
+  fetch(`${endpoint}/posts`, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
@@ -17,7 +17,7 @@ const getPosts = () => new Promise((resolve, reject) => {
 
 // GET ALL POSTS MADE BY A SINGLE USER
 const getPostsForSingleUser = (uid) => new Promise((resolve, reject) => {
-  fetch(`${endpoint}/posts.json?orderBy="uid"&equalTo="${uid}"`, {
+  fetch(`${endpoint}/posts?uid=${uid}"`, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
@@ -29,8 +29,8 @@ const getPostsForSingleUser = (uid) => new Promise((resolve, reject) => {
 });
 
 // GET A SINGLE POST
-const getSinglePost = (postId) => new Promise((resolve, reject) => {
-  fetch(`${endpoint}/posts/${postId}.json`, {
+const getSinglePost = (id) => new Promise((resolve, reject) => {
+  fetch(`${endpoint}/posts/${id}`, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
@@ -43,7 +43,7 @@ const getSinglePost = (postId) => new Promise((resolve, reject) => {
 
 // CREATE POST
 const createPost = (payload) => new Promise((resolve, reject) => {
-  fetch(`${endpoint}/posts.json`, {
+  fetch(`${endpoint}/posts`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -57,7 +57,7 @@ const createPost = (payload) => new Promise((resolve, reject) => {
 
 // UPDATE POST
 const updatePost = (payload) => new Promise((resolve, reject) => {
-  fetch(`${endpoint}/posts/${payload.id}.json`, {
+  fetch(`${endpoint}/posts/${payload.id}`, {
     method: 'PATCH',
     headers: {
       'Content-Type': 'application/json',
@@ -70,8 +70,8 @@ const updatePost = (payload) => new Promise((resolve, reject) => {
 });
 
 // DELETE POST
-const deletePost = (postId) => new Promise((resolve, reject) => {
-  fetch(`${endpoint}/posts/${postId}.json`, {
+const deletePost = (id) => new Promise((resolve, reject) => {
+  fetch(`${endpoint}/posts/${id}`, {
     method: 'DELETE',
     headers: {
       'Content-Type': 'application/json',
