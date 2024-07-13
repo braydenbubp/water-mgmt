@@ -2,14 +2,14 @@ import { Card } from 'react-bootstrap';
 import { useState } from 'react';
 import { useAuth } from '../utils/context/authContext';
 import PostCard from '../components/PostCard';
-import { getPosts } from '../api/postData';
+import { getPostsForSingleUser } from '../api/postData';
 
 export default function Profile() {
   const { user } = useAuth();
   const [posts, setPosts] = useState([]);
 
   const getUserPosts = () => {
-    getPosts(user.uid).then(setPosts);
+    getPostsForSingleUser().then(setPosts);
   };
 
   return (
