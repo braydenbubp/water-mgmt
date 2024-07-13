@@ -1,15 +1,19 @@
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import viewPostDetails from '../../api/mergedData';
+import { getCommentsByPostId } from '../../api/commentData';
+import CommentCard from '../../components/CommentCard';
 
 export default function ViewPost() {
   const [postDetails, setPostDetails] = useState({});
+  const [comments, setComments] = useState({});
   const router = useRouter();
 
   const { postId } = router.query;
 
   useEffect(() => {
     viewPostDetails(postId).then(setPostDetails);
+    getCommentsByPostId(postId).then(setComments);
   }, [postId]);
 
   return (
@@ -24,6 +28,13 @@ export default function ViewPost() {
         <p>{postDetails.description}</p>
         <p>Likes: {postDetails.likes}</p>
         <p>Tags: {postDetails.tags}</p>
+      </div>
+      <div>
+        <p>Comments:</p>
+        {/* NOT SURE IF I CAN CALL useEffect LIKE THIS, MIGHT NEED TO CREATE A NEW FUNCTION */}
+        {comments.map((comment) => (
+          <CommentCard key={comment.id} postObj={comment} onUpdate={useEffect} />
+        ))}
       </div>
     </div>
   );

@@ -17,7 +17,7 @@ function Home() {
 
   useEffect(() => {
     getAllThePosts();
-  });
+  }, [posts]);
 
   // TEST DATA - UNCOMMENT AND THEN COMMENT OUT LINES 10-20, COMMENT OUT THE IMPORTS, AND REMOVE 'onUpdate={getAllThePosts}' ON LINE 50
   // const posts = [
