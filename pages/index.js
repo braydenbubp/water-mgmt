@@ -17,9 +17,9 @@ function Home() {
 
   useEffect(() => {
     getAllThePosts();
-  }, [posts]);
+  }, []);
 
-  // TEST DATA - UNCOMMENT AND THEN COMMENT OUT LINES 10-20, COMMENT OUT THE IMPORTS, AND REMOVE 'onUpdate={getAllThePosts}' ON LINE 50
+  // TEST DATA - UNCOMMENT AND THEN COMMENT OUT LINES 12-20, COMMENT OUT THE IMPORTS, AND REMOVE 'onUpdate={getAllThePosts}' ON LINE 52
   // const posts = [
   //   {
   //     id: '1',
@@ -30,6 +30,7 @@ function Home() {
   //     category: 'Business',
   //     likes: 0,
   //     tags: 'water-management',
+  //     comments: '',
   //   },
   //   {
   //     id: '2',
@@ -40,6 +41,7 @@ function Home() {
   //     category: 'Personal',
   //     likes: 1,
   //     tags: 'water-management',
+  //     comments: '',
   //   },
   // ];
 
@@ -47,7 +49,7 @@ function Home() {
     <>
       <div className="d-flex flex-wrap" style={{ width: '100%' }}>
         {posts.map((post) => (
-          <PostCard key={post.id} postObj={post} onUpdate={getAllThePosts} />
+          <PostCard key={post.id} postObj={post} />
         ))}
       </div>
       <div

@@ -4,7 +4,7 @@ const endpoint = clientCredentials.databaseURL;
 
 const getCategories = () => new Promise((resolve, reject) => {
   console.warn(endpoint);
-  fetch(`${endpoint}/categories`, {
+  fetch(`${endpoint}/categorys`, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',

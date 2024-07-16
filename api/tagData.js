@@ -2,9 +2,9 @@ import { clientCredentials } from '../utils/client';
 
 const endpoint = clientCredentials.databaseURL;
 
-// GET ALL COMMENTS
-const getComments = () => new Promise((resolve, reject) => {
-  fetch(`${endpoint}/comments`, {
+// GET ALL TAGS
+const getTags = () => new Promise((resolve, reject) => {
+  fetch(`${endpoint}/tags`, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
@@ -15,9 +15,9 @@ const getComments = () => new Promise((resolve, reject) => {
     .catch(reject);
 });
 
-// GET COMMENTS BY POST ID
-const getCommentsByPostId = (id) => new Promise((resolve, reject) => {
-  fetch(`${endpoint}/comments?post_id=${id}`, {
+// GET TAGS BY POST ID
+const getTagsByPostId = (id) => new Promise((resolve, reject) => {
+  fetch(`${endpoint}/tags?post_id=${id}`, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
@@ -28,9 +28,9 @@ const getCommentsByPostId = (id) => new Promise((resolve, reject) => {
     .catch(reject);
 });
 
-// GET ALL COMMENTS MADE BY A SINGLE USER
-const getCommentsForSingleUser = (uid) => new Promise((resolve, reject) => {
-  fetch(`${endpoint}/comments?uid=${uid}"`, {
+// GET ALL TAGS MADE BY A SINGLE USER
+const getTagsForSingleUser = (uid) => new Promise((resolve, reject) => {
+  fetch(`${endpoint}/tags?uid=${uid}"`, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
@@ -41,9 +41,9 @@ const getCommentsForSingleUser = (uid) => new Promise((resolve, reject) => {
     .catch(reject);
 });
 
-// GET A SINGLE COMMENT
-const getSingleComment = (id) => new Promise((resolve, reject) => {
-  fetch(`${endpoint}/comments/${id}`, {
+// GET A SINGLE TAG
+const getSingleTag = (id) => new Promise((resolve, reject) => {
+  fetch(`${endpoint}/tags/${id}`, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
@@ -54,10 +54,10 @@ const getSingleComment = (id) => new Promise((resolve, reject) => {
     .catch(reject);
 });
 
-// CREATE COMMENT
-const createComment = (payload) => new Promise((resolve, reject) => {
-  fetch(`${endpoint}/comments`, {
-    method: 'COMMENT',
+// CREATE TAG
+const createTag = (payload) => new Promise((resolve, reject) => {
+  fetch(`${endpoint}/tags`, {
+    method: 'TAG',
     headers: {
       'Content-Type': 'application/json',
     },
@@ -68,9 +68,9 @@ const createComment = (payload) => new Promise((resolve, reject) => {
     .catch(reject);
 });
 
-// UPDATE COMMENT
-const updateComment = (payload) => new Promise((resolve, reject) => {
-  fetch(`${endpoint}/comments/${payload.id}`, {
+// UPDATE TAG
+const updateTag = (payload) => new Promise((resolve, reject) => {
+  fetch(`${endpoint}/tags/${payload.id}`, {
     method: 'PATCH',
     headers: {
       'Content-Type': 'application/json',
@@ -82,9 +82,9 @@ const updateComment = (payload) => new Promise((resolve, reject) => {
     .catch(reject);
 });
 
-// DELETE COMMENT
-const deleteComment = (id) => new Promise((resolve, reject) => {
-  fetch(`${endpoint}/comments/${id}`, {
+// DELETE TAG
+const deleteTag = (id) => new Promise((resolve, reject) => {
+  fetch(`${endpoint}/tags/${id}`, {
     method: 'DELETE',
     headers: {
       'Content-Type': 'application/json',
@@ -96,5 +96,5 @@ const deleteComment = (id) => new Promise((resolve, reject) => {
 });
 
 export {
-  getComments, getCommentsByPostId, getCommentsForSingleUser, getSingleComment, createComment, updateComment, deleteComment,
+  getTags, getTagsByPostId, getTagsForSingleUser, getSingleTag, createTag, updateTag, deleteTag,
 };
