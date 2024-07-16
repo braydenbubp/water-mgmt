@@ -1,8 +1,9 @@
-import { Card } from 'react-bootstrap';
+import { Button, Card } from 'react-bootstrap';
 import { useState } from 'react';
 import { useAuth } from '../utils/context/authContext';
 import PostCard from '../components/PostCard';
 import { getPostsForSingleUser } from '../api/postData';
+import { signOut } from '../utils/auth';
 
 export default function Profile() {
   const { user } = useAuth();
@@ -19,7 +20,7 @@ export default function Profile() {
         <Card.Body>
           <Card.Title>{user.fbUser.displayName}</Card.Title>
           <p className="card-text bold">Last Login: {user.lastSignInDate}</p>
-          <div style={{ display: 'flex', justifyContent: 'right' }}><signout /></div>
+          <div style={{ display: 'flex', justifyContent: 'right' }}><Button variant="danger" onClick={signOut}>Sign Out</Button></div>
         </Card.Body>
       </Card>
       {/* not sure if this works at getting user posts yet need data to test it */}

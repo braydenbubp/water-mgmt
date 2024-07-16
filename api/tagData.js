@@ -2,9 +2,9 @@ import { clientCredentials } from '../utils/client';
 
 const endpoint = clientCredentials.databaseURL;
 
-// GET ALL POSTS
-const getPosts = () => new Promise((resolve, reject) => {
-  fetch(`${endpoint}/posts`, {
+// GET ALL TAGS
+const getTags = () => new Promise((resolve, reject) => {
+  fetch(`${endpoint}/tags`, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
@@ -15,9 +15,9 @@ const getPosts = () => new Promise((resolve, reject) => {
     .catch(reject);
 });
 
-// GET ALL POSTS MADE BY A SINGLE USER
-const getPostsForSingleUser = (uid) => new Promise((resolve, reject) => {
-  fetch(`${endpoint}/posts?uid=${uid}"`, {
+// GET TAGS BY POST ID
+const getTagsByPostId = (id) => new Promise((resolve, reject) => {
+  fetch(`${endpoint}/tags?post_id=${id}`, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
@@ -28,9 +28,9 @@ const getPostsForSingleUser = (uid) => new Promise((resolve, reject) => {
     .catch(reject);
 });
 
-// GET A SINGLE POST
-const getSinglePost = (id) => new Promise((resolve, reject) => {
-  fetch(`${endpoint}/posts/${id}`, {
+// GET ALL TAGS MADE BY A SINGLE USER
+const getTagsForSingleUser = (uid) => new Promise((resolve, reject) => {
+  fetch(`${endpoint}/tags?uid=${uid}"`, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
@@ -41,10 +41,23 @@ const getSinglePost = (id) => new Promise((resolve, reject) => {
     .catch(reject);
 });
 
-// CREATE POST
-const createPost = (payload) => new Promise((resolve, reject) => {
-  fetch(`${endpoint}/posts`, {
-    method: 'POST',
+// GET A SINGLE TAG
+const getSingleTag = (id) => new Promise((resolve, reject) => {
+  fetch(`${endpoint}/tags/${id}`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  })
+    .then((response) => response.json())
+    .then((data) => resolve(Object.values(data)))
+    .catch(reject);
+});
+
+// CREATE TAG
+const createTag = (payload) => new Promise((resolve, reject) => {
+  fetch(`${endpoint}/tags`, {
+    method: 'TAG',
     headers: {
       'Content-Type': 'application/json',
     },
@@ -55,9 +68,9 @@ const createPost = (payload) => new Promise((resolve, reject) => {
     .catch(reject);
 });
 
-// UPDATE POST
-const updatePost = (payload) => new Promise((resolve, reject) => {
-  fetch(`${endpoint}/posts/${payload.id}`, {
+// UPDATE TAG
+const updateTag = (payload) => new Promise((resolve, reject) => {
+  fetch(`${endpoint}/tags/${payload.id}`, {
     method: 'PATCH',
     headers: {
       'Content-Type': 'application/json',
@@ -69,9 +82,9 @@ const updatePost = (payload) => new Promise((resolve, reject) => {
     .catch(reject);
 });
 
-// DELETE POST
-const deletePost = (id) => new Promise((resolve, reject) => {
-  fetch(`${endpoint}/posts/${id}`, {
+// DELETE TAG
+const deleteTag = (id) => new Promise((resolve, reject) => {
+  fetch(`${endpoint}/tags/${id}`, {
     method: 'DELETE',
     headers: {
       'Content-Type': 'application/json',
@@ -83,5 +96,5 @@ const deletePost = (id) => new Promise((resolve, reject) => {
 });
 
 export {
-  getPosts, getPostsForSingleUser, getSinglePost, createPost, updatePost, deletePost,
+  getTags, getTagsByPostId, getTagsForSingleUser, getSingleTag, createTag, updateTag, deleteTag,
 };

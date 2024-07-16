@@ -3,7 +3,8 @@ import { clientCredentials } from '../utils/client';
 const endpoint = clientCredentials.databaseURL;
 
 const getCategories = () => new Promise((resolve, reject) => {
-  fetch(`${endpoint}/cagetCategories.json`, {
+  console.warn(endpoint);
+  fetch(`${endpoint}/categorys`, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
