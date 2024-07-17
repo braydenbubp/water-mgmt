@@ -49,7 +49,7 @@ function Home() {
     <>
       <div className="d-flex flex-wrap" style={{ width: '100%' }}>
         {posts.map((post) => (
-          <PostCard key={post.id} postObj={post} />
+          <PostCard key={post.id} postObj={post} onUpdate={getAllThePosts} />
         ))}
       </div>
       <div

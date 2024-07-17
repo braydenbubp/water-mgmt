@@ -15,7 +15,7 @@ function PostCard({ postObj, onUpdate }) {
 
   return (
     <Card style={{ width: '300px', margin: '15px' }}>
-      <Card.Img variant="top" src={postObj.img} alt={postObj.title} style={{ height: '300px' }} />
+      <Card.Img variant="top" src={postObj.image_url} alt={postObj.title} style={{ height: '300px' }} />
       <Card.Body>
         <Card.Title>{postObj.title}</Card.Title>
         <Card.Subtitle>{postObj.category}</Card.Subtitle>
@@ -43,10 +43,10 @@ PostCard.propTypes = {
   postObj: PropTypes.shape({
     id: PropTypes.string,
     title: PropTypes.string,
-    img: PropTypes.string,
+    image_url: PropTypes.string,
     description: PropTypes.string,
-    user_id: PropTypes.string,
-    category: PropTypes.string,
+    user: PropTypes.number,
+    category: PropTypes.number,
     likes: PropTypes.number,
     tags: PropTypes.string,
   }).isRequired,
