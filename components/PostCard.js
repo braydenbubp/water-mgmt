@@ -24,6 +24,8 @@ function PostCard({ postObj, onUpdate }) {
           <ListGroup.Item>Likes: {postObj.likes}</ListGroup.Item>
           <ListGroup.Item>Tags: {postObj.tags}</ListGroup.Item>
         </ListGroup>
+        <Button variant="secondary" className="m-2">Like</Button>
+        <Button variant="secondary" className="m-2">Dislike</Button>
         {/* DYNAMIC LINK TO VIEW THE POST DETAILS */}
         <Link href={`/post/${postObj.id}`} passHref>
           <Button variant="primary" className="m-2">View</Button>
