@@ -10,7 +10,7 @@ const initialState = {
   title: '',
   imageUrl: '',
   description: '',
-  category: '',
+  category: {},
 };
 
 export default function PostForm({ obj }) {
@@ -21,9 +21,7 @@ export default function PostForm({ obj }) {
 
   useEffect(() => {
     getCategories().then(setCategories);
-
-    if (obj.firebaseKey) setFormInput(obj);
-  }, [obj]);
+  }, []);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -79,7 +77,7 @@ export default function PostForm({ obj }) {
       <FloatingLabel controlId="floatingSelect" label="category">
         <Form.Select
           // aria-label="category"
-          name="category_id"
+          name="category"
           onChange={handleChange}
           className="mb-3"
           value={formInput.category}
@@ -89,10 +87,10 @@ export default function PostForm({ obj }) {
           {
             categories.map((category) => (
               <option
-                key={category.category}
-                value={category.category}
+                key={category.id}
+                value={category.id}
               >
-                {category.category}
+                {category.label}
               </option>
             ))
           }
