@@ -19,7 +19,7 @@ export default function ViewPost() {
   return (
     <div className="mt-5 d-flex flex-wrap">
       <div className="d-flex flex-column">
-        <img src={postDetails.image} alt={postDetails.title} style={{ width: '300px ' }} />
+        <img src={postDetails.image_url} alt={postDetails.title} style={{ width: '300px ' }} />
       </div>
       <div className="text-white ms-5 details">
         <h3>{postDetails.title}</h3>

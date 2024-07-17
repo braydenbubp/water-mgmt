@@ -8,7 +8,7 @@ import getCategories from '../../api/categoryData';
 
 const initialState = {
   title: '',
-  imageUrl: '',
+  image_url: '',
   description: '',
   category: {},
 };
@@ -33,12 +33,12 @@ export default function PostForm({ obj }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (obj.firebaseKey) {
-      updatePost(formInput).then(() => router.push(`/post/${obj.firebaseKey}`));
+    if (obj.id) {
+      updatePost(formInput).then(() => router.push(`/post/${obj.id}`));
     } else {
       const payload = { ...formInput, uid: user.uid };
       createPost(payload).then(({ name }) => {
-        const patchPayload = { firebaseKey: name };
+        const patchPayload = { id: name };
         updatePost(patchPayload).then(() => {
           router.push('/');
         });
@@ -48,7 +48,7 @@ export default function PostForm({ obj }) {
 
   return (
     <Form onSubmit={handleSubmit}>
-      <h2 className="text-white mt-5">{obj.firebaseKey ? 'Update' : 'Create'} Post</h2>
+      <h2 className="text-white mt-5">{obj.id ? 'Update' : 'Create'} Post</h2>
 
       {/* TITLE INPUT  */}
       <FloatingLabel controlId="floatingInput1" label="Post Title" className="mb-3">
@@ -67,8 +67,8 @@ export default function PostForm({ obj }) {
         <Form.Control
           type="url"
           placeholder="Enter an image url"
-          name="image"
-          value={formInput.image}
+          name="image_url"
+          value={formInput.image_url}
           onChange={handleChange}
           required
         />
@@ -109,7 +109,7 @@ export default function PostForm({ obj }) {
         />
 
         {/* SUBMIT BUTTON  */}
-        <Button type="submit">{obj.firebaseKey ? 'Update' : 'Create'} Post</Button>
+        <Button type="submit">{obj.id ? 'Update' : 'Create'} Post</Button>
       </FloatingLabel>
 
     </Form>
@@ -121,8 +121,8 @@ PostForm.propTypes = {
     description: PropTypes.string,
     image: PropTypes.string,
     title: PropTypes.string,
-    category: PropTypes.string,
-    firebaseKey: PropTypes.string,
+    category: PropTypes.objectOf(PropTypes.string),
+    id: PropTypes.number,
   }),
 };
 
