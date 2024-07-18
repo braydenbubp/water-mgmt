@@ -1,15 +1,15 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from 'react';
-import { Button } from 'react-bootstrap';
-import { signOut } from '../utils/auth';
+// import { Button } from 'react-bootstrap';
+// import { signOut } from '../utils/auth';
 import { useAuth } from '../utils/context/authContext';
 import { getPosts } from '../api/postData';
 import PostCard from '../components/PostCard';
 
 function Home() {
-  const { user } = useAuth();
-
   const [posts, setPosts] = useState([]);
+
+  const { user } = useAuth();
 
   const getAllThePosts = () => {
     getPosts().then(setPosts);
@@ -47,25 +47,11 @@ function Home() {
 
   return (
     <>
+      <h1>Hello {user.fbUser.displayName}! Check out these posts!</h1>
       <div className="d-flex flex-wrap" style={{ width: '100%' }}>
         {posts.map((post) => (
           <PostCard key={post.id} postObj={post} onUpdate={getAllThePosts} />
         ))}
-      </div>
-      <div
-        className="text-center d-flex flex-column justify-content-center align-content-center"
-        style={{
-          height: '20vh',
-          padding: '30px',
-          maxWidth: '400px',
-          margin: '0 auto',
-        }}
-      >
-        <h1>Hello {user.fbUser.displayName}! </h1>
-        <p>Click the button below to logout!</p>
-        <Button variant="danger" type="button" size="lg" className="copy-btn" onClick={signOut}>
-          Sign Out
-        </Button>
       </div>
     </>
   );

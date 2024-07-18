@@ -36,13 +36,10 @@ export default function PostForm({ obj }) {
     if (obj.id) {
       updatePost(formInput).then(() => router.push(`/post/${obj.id}`));
     } else {
+      // This only works if the user exists - will need to create a user in the database when somebody logs in for the first time"
       const payload = { ...formInput, uid: user.uid };
-      createPost(payload).then(({ name }) => {
-        const patchPayload = { id: name };
-        updatePost(patchPayload).then(() => {
-          router.push('/');
-        });
-      });
+      console.warn('payload', payload);
+      createPost(payload).then(() => router.push('/'));
     }
   };
 
@@ -80,7 +77,7 @@ export default function PostForm({ obj }) {
           name="category"
           onChange={handleChange}
           className="mb-3"
-          value={formInput.category}
+          value={formInput.category.id}
           required
         >
           <option value="" disabled>Select a category</option>
@@ -118,11 +115,27 @@ export default function PostForm({ obj }) {
 
 PostForm.propTypes = {
   obj: PropTypes.shape({
-    description: PropTypes.string,
-    image: PropTypes.string,
-    title: PropTypes.string,
-    category: PropTypes.objectOf(PropTypes.string),
+    // description: PropTypes.string,
+    // image: PropTypes.string,
+    // title: PropTypes.string,
+    // category: PropTypes.objectOf(PropTypes.string),
+    // id: PropTypes.number,
     id: PropTypes.number,
+    title: PropTypes.string,
+    image_url: PropTypes.string,
+    description: PropTypes.string,
+    user: PropTypes.shape({
+      id: PropTypes.number,
+      name: PropTypes.string,
+      uid: PropTypes.number,
+      bio: PropTypes.string,
+    }),
+    category: PropTypes.shape({
+      id: PropTypes.number,
+      label: PropTypes.string,
+    }),
+    likes: PropTypes.number,
+    tags: PropTypes.arrayOf(PropTypes.string),
   }),
 };
 

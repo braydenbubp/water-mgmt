@@ -6,13 +6,13 @@ import PostForm from '../../../components/Forms/PostForm';
 export default function EditPost() {
   const [editItem, setEditItem] = useState({});
   const router = useRouter();
-  // TODO: grab the firebasekey
-  const { firebaseKey } = router.query;
+  // TODO: grab the post ID
+  const { id } = router.query;
 
   // TODO: make a call to the API to get the Post data
   useEffect(() => {
-    getSinglePost(firebaseKey).then(setEditItem);
-  }, [firebaseKey]);
+    getSinglePost(id).then(setEditItem);
+  }, [id]);
 
   // TODO: pass object to form
   return (<PostForm obj={editItem} />);
