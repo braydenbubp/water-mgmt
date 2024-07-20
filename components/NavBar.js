@@ -35,7 +35,7 @@ export default function NavBar() {
               <Link passHref href="/post/edit/new">
                 <Nav.Link>Add Post</Nav.Link>
               </Link>
-              <Link passHref href="/profile">
+              <Link passHref href="/profile/profile">
                 <Nav.Link>Profile</Nav.Link>
               </Link>
             </div>

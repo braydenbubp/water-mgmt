@@ -21,9 +21,9 @@ function RegisterForm({ user, updateUser }) {
 
   return (
     <Form onSubmit={handleSubmit}>
-      <Form.Group className="mb-3" controlId="formfirstname">
+      <Form.Group className="mb-3" controlId="name">
         <Form.Label>name</Form.Label>
-        <Form.Control as="textarea" name="firstName" required placeholder="Enter your Name" onChange={({ target }) => setFormData((prev) => ({ ...prev, [target.name]: target.value }))} />
+        <Form.Control as="textarea" name="name" required placeholder="Enter your Name" onChange={({ target }) => setFormData((prev) => ({ ...prev, [target.name]: target.value }))} />
       </Form.Group>
 
       <Form.Group className="mb-3" controlId="formBio">
