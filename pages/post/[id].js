@@ -1,20 +1,26 @@
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
-import viewPostDetails from '../../api/mergedData';
-import { getCommentsByPostId } from '../../api/commentData';
-import CommentCard from '../../components/CommentCard';
+import PropTypes from 'prop-types';
+import { getSinglePost } from '../../api/postData';
+// import { getCommentsByPostId } from '../../api/commentData';
+// import CommentCard from '../../components/CommentCard';
 
+const initialState = {
+  title: '',
+  image_url: '',
+  description: '',
+  category: {},
+};
 export default function ViewPost() {
-  const [postDetails, setPostDetails] = useState({});
-  const [comments, setComments] = useState({});
   const router = useRouter();
-
-  const { postId } = router.query;
+  const { id } = router.query;
+  const [postDetails, setPostDetails] = useState({});
+  // const [comments, setComments] = useState({});
 
   useEffect(() => {
-    viewPostDetails(postId).then(setPostDetails);
-    getCommentsByPostId(postId).then(setComments);
-  }, [postId]);
+    getSinglePost(id).then(setPostDetails);
+    // getCommentsByPostId(postId).then(setComments);
+  }, [id]);
 
   return (
     <div className="mt-5 d-flex flex-wrap">
@@ -23,19 +29,44 @@ export default function ViewPost() {
       </div>
       <div className="text-white ms-5 details">
         <h3>{postDetails.title}</h3>
-        <h5>{postDetails.category}</h5>
-        <p>Written by {postDetails.userObject?.first_name} {postDetails.userObject?.last_name}</p>
-        <p>{postDetails.description}</p>
+        <h5>Category: {postDetails.category?.label}</h5>
+        <p>Written by: {postDetails.user?.name}</p>
+        <p>Description: {postDetails.description}</p>
         <p>Likes: {postDetails.likes}</p>
         <p>Tags: {postDetails.tags}</p>
-      </div>
-      <div>
-        <p>Comments:</p>
-        {/* NOT SURE IF I CAN CALL useEffect LIKE THIS, MIGHT NEED TO CREATE A NEW FUNCTION */}
-        {comments.map((comment) => (
-          <CommentCard key={comment.id} postObj={comment} onUpdate={useEffect} />
-        ))}
+        <div>
+          <p>Comments:</p>
+          {/* NOT SURE IF I CAN CALL useEffect LIKE THIS, MIGHT NEED TO CREATE A NEW FUNCTION */}
+          {/* {comments.map((comment) => (
+            <CommentCard key={comment.id} postObj={comment} onUpdate={useEffect} />
+          ))} */}
+        </div>
       </div>
     </div>
   );
 }
+
+ViewPost.propTypes = {
+  postDetails: PropTypes.shape({
+    id: PropTypes.number,
+    title: PropTypes.string,
+    image_url: PropTypes.string,
+    description: PropTypes.string,
+    user: PropTypes.shape({
+      id: PropTypes.number,
+      name: PropTypes.string,
+      uid: PropTypes.string,
+      bio: PropTypes.string,
+    }),
+    category: PropTypes.shape({
+      id: PropTypes.number,
+      label: PropTypes.string,
+    }),
+    likes: PropTypes.number,
+    tags: PropTypes.arrayOf(PropTypes.string),
+  }),
+};
+
+ViewPost.defaultProps = {
+  postDetails: initialState,
+};

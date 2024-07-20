@@ -21,7 +21,9 @@ export default function PostForm({ obj }) {
 
   useEffect(() => {
     getCategories().then(setCategories);
-  }, []);
+
+    if (obj.id) setFormInput(obj);
+  }, [obj]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -100,7 +102,7 @@ export default function PostForm({ obj }) {
           placeholder="Description"
           style={{ height: '100px' }}
           name="description"
-          value={formInput.description}
+          value={obj.description || formInput.description}
           onChange={handleChange}
           required
         />
@@ -115,11 +117,6 @@ export default function PostForm({ obj }) {
 
 PostForm.propTypes = {
   obj: PropTypes.shape({
-    // description: PropTypes.string,
-    // image: PropTypes.string,
-    // title: PropTypes.string,
-    // category: PropTypes.objectOf(PropTypes.string),
-    // id: PropTypes.number,
     id: PropTypes.number,
     title: PropTypes.string,
     image_url: PropTypes.string,
@@ -127,7 +124,7 @@ PostForm.propTypes = {
     user: PropTypes.shape({
       id: PropTypes.number,
       name: PropTypes.string,
-      uid: PropTypes.number,
+      uid: PropTypes.string,
       bio: PropTypes.string,
     }),
     category: PropTypes.shape({
