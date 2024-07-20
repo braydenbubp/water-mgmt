@@ -25,6 +25,7 @@ const AuthProvider = (props) => {
 
   const updateUser = useMemo(
     () => (uid) => checkUser(uid).then((gamerInfo) => {
+      console.warn(gamerInfo);
       setUser({ fbUser: oAuthUser, ...gamerInfo });
     }),
     [oAuthUser],
@@ -54,6 +55,7 @@ const AuthProvider = (props) => {
     // https://reactjs.org/docs/hooks-reference.html#usememo
     () => ({
       user,
+      oAuthUser,
       updateUser,
       userLoading: user === null || oAuthUser === null,
       // as long as user === null, will be true
