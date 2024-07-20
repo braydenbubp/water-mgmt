@@ -8,7 +8,7 @@ import { signOut } from '../utils/auth';
 export default function Profile() {
   const { user } = useAuth();
   const [posts, setPosts] = useState([]);
-
+  console.warn(user);
   const getUserPosts = () => {
     getPostsForSingleUser().then(setPosts);
   };
@@ -16,10 +16,11 @@ export default function Profile() {
   return (
     <>
       <Card style={{ width: '24rem', margin: '10px' }}>
-        <Card.Img variant="top" src={user.photoUrl} alt={user.fbUser.displayName} style={{ height: '150px' }} />
+        <Card.Img variant="top" src={user.photoUrl} alt={user.name} style={{ height: '150px' }} />
         <Card.Body>
-          <Card.Title>{user.fbUser.displayName}</Card.Title>
-          <p className="card-text bold">Last Login: {user.lastSignInDate}</p>
+          <Card.Title>{user.name}</Card.Title>
+          <Button> edit </Button>
+          <p className="card-text bold">Bio {user.bio}</p>
           <div style={{ display: 'flex', justifyContent: 'right' }}><Button variant="danger" onClick={signOut}>Sign Out</Button></div>
         </Card.Body>
       </Card>

@@ -47,7 +47,7 @@ function Home() {
 
   return (
     <>
-      <h1>Hello {user.fbUser.displayName}! Check out these posts!</h1>
+      <h1>Hello {user.name}! Check out these posts!</h1>
       <div className="d-flex flex-wrap" style={{ width: '100%' }}>
         {posts.map((post) => (
           <PostCard key={post.id} postObj={post} onUpdate={getAllThePosts} />
