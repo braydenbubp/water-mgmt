@@ -20,7 +20,7 @@ function CommentCard({ commentObj, onUpdate }) {
         <Card.Text>{commentObj.content}</Card.Text>
         <Button variant="primary" className="m-2">Edit</Button>
         <Button variant="danger" onClick={deleteThisComment} className="m-2">Delete</Button>
-        <Card.Footer>Date commented: {commentObj.date_posted}</Card.Footer>
+        {/* <Card.Footer>Date commented: {commentObj.date_posted}</Card.Footer> */}
       </Card.Body>
     </Card>
   );
@@ -28,11 +28,10 @@ function CommentCard({ commentObj, onUpdate }) {
 
 CommentCard.propTypes = {
   commentObj: PropTypes.shape({
-    id: PropTypes.string,
+    id: PropTypes.number,
     content: PropTypes.string,
     uid: PropTypes.string,
-    post_id: PropTypes.string,
-    date_posted: PropTypes.string,
+    user: PropTypes.string,
   }).isRequired,
   onUpdate: PropTypes.func.isRequired,
 };
