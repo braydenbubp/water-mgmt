@@ -17,7 +17,7 @@ const getPosts = () => new Promise((resolve, reject) => {
 
 // GET ALL POSTS MADE BY A SINGLE USER
 const getPostsForSingleUser = (uid) => new Promise((resolve, reject) => {
-  fetch(`${endpoint}/posts?uid=${uid}"`, {
+  fetch(`${endpoint}/posts?uid="${uid}"`, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
