@@ -82,7 +82,7 @@ export default function PostForm({ obj }) {
           value={formInput.category.id}
           required
         >
-          <option value="" disabled>Select a category</option>
+          <option value="" selected disabled>Select a category</option>
           {
             categories.map((category) => (
               <option
