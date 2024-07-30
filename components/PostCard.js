@@ -18,7 +18,7 @@ function PostCard({ postObj, onUpdate }) {
       <Card.Img variant="top" src={postObj.image_url} alt={postObj.title} style={{ height: '300px' }} />
       <Card.Body>
         <Card.Title>{postObj.title}</Card.Title>
-        <Card.Subtitle>{postObj.category.label}</Card.Subtitle>
+        {/* <Card.Subtitle>{postObj.category.label}</Card.Subtitle> */}
         <Card.Text>{postObj.description}</Card.Text>
         <ListGroup className="list-group-flush">
           <ListGroup.Item>Likes: {postObj.likes}</ListGroup.Item>
@@ -48,7 +48,7 @@ PostCard.propTypes = {
     image_url: PropTypes.string,
     description: PropTypes.string,
     user: PropTypes.shape({
-      id: PropTypes.number,
+      id: PropTypes.string,
       name: PropTypes.string,
       uid: PropTypes.number,
       bio: PropTypes.string,

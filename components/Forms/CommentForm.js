@@ -8,25 +8,27 @@ import { createComment, updateComment } from '../../api/commentData';
 const initialState = {
   id: '',
   content: '',
-  post_id: '',
-  uid: '',
-  date_posted: '',
+  post: '',
+  user: '',
+  created_on: '',
 };
 
-export default function CommentForm({ obj }, postId) {
+export default function CommentForm({ obj, commentPostId, onSubmit }) {
   const [formInput, setFormInput] = useState(initialState);
   const router = useRouter();
   const { user } = useAuth();
+
+  console.warn(commentPostId);
 
   // NOT SURE IF THIS IS RIGHT. THE IDEA IS THAT IF WE ARE EDITING A COMMENT, IT WILL SET THE FORMINPUT STATE TO THE VALUES OF THE COMMENT, BUT IF WE ARE CREATING A NEW COMMENT, IT WILL SET THE POST_ID OF THE INITAL STATE TO THE POST_ID ON WHICH WE ARE COMMENTING
   useEffect(() => {
     if (obj.id) {
       setFormInput(obj);
     } else {
-      initialState.post_id = postId;
+      initialState.post = commentPostId;
       setFormInput(initialState);
     }
-  }, [obj, postId]);
+  }, [obj, commentPostId]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -39,15 +41,24 @@ export default function CommentForm({ obj }, postId) {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (obj.id) {
+      const updatedComment = {
+        id: obj.id,
+        user: obj.user,
+        content: formInput.content,
+        created_on: obj.created_on,
+        post: obj.post,
+      };
       // ASSUMING WE ARE VIEWING COMMENTS ON THE POST DETAILS PAGE, SUBMITTING OR EDITING A COMMENT WILL RELOAD THE VIEW POST DETAILS PAGE FOR THAT POST
-      updateComment(formInput).then(() => router.push(`/posts/${obj.post_id}`));
+      updateComment(updatedComment).then(() => router.push(`/posts/${obj.post}`));
     } else {
-      const payload = { ...formInput, uid: user.uid };
-      createComment(payload).then(({ name }) => {
-        const patchPayload = { id: name };
-        updateComment(patchPayload).then(() => {
-          router.push('/');
-        });
+      const payload = {
+        user: user.id,
+        content: formInput.content,
+        post: commentPostId,
+      };
+      createComment(user.id, commentPostId, payload).then(() => {
+        setFormInput(initialState);
+        onSubmit();
       });
     }
   };
@@ -57,13 +68,13 @@ export default function CommentForm({ obj }, postId) {
       <h2 className="text-white mt-5">{obj.id ? 'Update' : 'Create'} Comment</h2>
 
       {/* CONTENT TEXTAREA  */}
-      <FloatingLabel controlId="floatingTextarea" label="Comment" className="mb-3">
+      <FloatingLabel controlId="floatingTextarea" label="Enter your comment" className="mb-3">
         <Form.Control
           as="textarea"
           placeholder="Enter your comment"
-          style={{ height: '200px' }}
+          style={{ height: '200px', width: '400px' }}
           name="content"
-          value={formInput.description}
+          value={formInput.content}
           onChange={handleChange}
           required
         />
@@ -79,11 +90,13 @@ export default function CommentForm({ obj }, postId) {
 CommentForm.propTypes = {
   obj: PropTypes.shape({
     id: PropTypes.string,
+    user: PropTypes.string,
     content: PropTypes.string,
-    uid: PropTypes.string,
-    post_id: PropTypes.string,
-    date_posted: PropTypes.string,
+    post: PropTypes.string,
+    created_on: PropTypes.string,
   }),
+  commentPostId: PropTypes.string.isRequired,
+  onSubmit: PropTypes.func.isRequired,
 };
 
 CommentForm.defaultProps = {
