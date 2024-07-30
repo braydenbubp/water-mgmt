@@ -48,7 +48,7 @@ PostCard.propTypes = {
     image_url: PropTypes.string,
     description: PropTypes.string,
     user: PropTypes.shape({
-      id: PropTypes.number,
+      id: PropTypes.string,
       name: PropTypes.string,
       uid: PropTypes.number,
       bio: PropTypes.string,

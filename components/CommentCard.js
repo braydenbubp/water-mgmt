@@ -16,7 +16,6 @@ function CommentCard({ commentObj, onUpdate }) {
   return (
     <Card style={{ width: '800px', margin: '15px' }}>
       <Card.Body>
-        <Card.Title>{commentObj.id.first_name} {commentObj.id.last_name}</Card.Title>
         <Card.Text>{commentObj.content}</Card.Text>
         <Button variant="primary" className="m-2">Edit</Button>
         <Button variant="danger" onClick={deleteThisComment} className="m-2">Delete</Button>

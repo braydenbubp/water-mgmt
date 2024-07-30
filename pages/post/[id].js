@@ -2,8 +2,9 @@ import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import PropTypes from 'prop-types';
 import { getSinglePost } from '../../api/postData';
-// import { getCommentsByPostId } from '../../api/commentData';
-// import CommentCard from '../../components/CommentCard';
+import { getCommentsByPostId } from '../../api/commentData';
+import CommentCard from '../../components/CommentCard';
+import CommentForm from '../../components/Forms/CommentForm';
 
 const initialState = {
   title: '',
@@ -15,12 +16,20 @@ export default function ViewPost() {
   const router = useRouter();
   const { id } = router.query;
   const [postDetails, setPostDetails] = useState({});
-  // const [comments, setComments] = useState({});
+  const [comments, setComments] = useState([]);
+
+  const getThePost = () => {
+    getSinglePost(id).then(setPostDetails);
+  };
+
+  const getCommentsByPost = () => {
+    getCommentsByPostId(id).then(setComments);
+  };
 
   useEffect(() => {
-    getSinglePost(id).then(setPostDetails);
-    // getCommentsByPostId(postId).then(setComments);
-  }, [id]);
+    getThePost();
+    getCommentsByPost();
+  }, []);
 
   return (
     <div className="mt-5 d-flex flex-wrap">
@@ -36,10 +45,10 @@ export default function ViewPost() {
         <p>Tags: {postDetails.tags}</p>
         <div>
           <p>Comments:</p>
-          {/* NOT SURE IF I CAN CALL useEffect LIKE THIS, MIGHT NEED TO CREATE A NEW FUNCTION */}
-          {/* {comments.map((comment) => (
-            <CommentCard key={comment.id} postObj={comment} onUpdate={useEffect} />
-          ))} */}
+          {comments.map((comment) => (
+            <CommentCard key={comment.id} commentObj={comment} onUpdate={getCommentsByPost} />
+          ))}
+          <CommentForm commentPostId={id} onSubmit={getCommentsByPost} />
         </div>
       </div>
     </div>

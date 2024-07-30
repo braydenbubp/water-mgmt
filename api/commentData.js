@@ -55,13 +55,16 @@ const getSingleComment = (id) => new Promise((resolve, reject) => {
 });
 
 // CREATE COMMENT
-const createComment = (payload) => new Promise((resolve, reject) => {
-  fetch(`${endpoint}/comments`, {
-    method: 'COMMENT',
+const createComment = (userId, postId, comment) => new Promise((resolve, reject) => {
+  fetch(`http://localhost:8000/posts/${postId}/post_comments`, {
+    method: 'POST',
     headers: {
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify(payload),
+    body: JSON.stringify({
+      user: userId,
+      content: comment.content,
+    }),
   })
     .then((response) => response.json())
     .then((data) => resolve(data))
