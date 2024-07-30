@@ -10,10 +10,10 @@ export default function Profile() {
   const { user } = useAuth();
   const [posts, setPosts] = useState([]);
   const userPosts = () => {
-    getPostsForSingleUser().then(setPosts);
+    getPostsForSingleUser(user.uid).then(setPosts);
   };
   useEffect(() => {
-    getPostsForSingleUser();
+    userPosts();
   }, []);
 
   return (
