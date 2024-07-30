@@ -1,5 +1,5 @@
 import { Button, Card } from 'react-bootstrap';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { useAuth } from '../../utils/context/authContext';
 import PostCard from '../../components/PostCard';
@@ -9,9 +9,12 @@ import { signOut } from '../../utils/auth';
 export default function Profile() {
   const { user } = useAuth();
   const [posts, setPosts] = useState([]);
-  const useEffect = () => {
+  const userPosts = () => {
     getPostsForSingleUser().then(setPosts);
   };
+  useEffect(() => {
+    getPostsForSingleUser();
+  }, []);
 
   return (
     <>
@@ -29,7 +32,7 @@ export default function Profile() {
       <div className="d-flex flex-wrap" style={{ width: '100%' }}>
         <p>POSTS</p>
         {posts.map((post) => (
-          <PostCard key={post.id} postObj={post} onUpdate={useEffect} />
+          <PostCard key={post.uid} postObj={post} onUpdate={userPosts} />
         ))}
       </div>
     </>
