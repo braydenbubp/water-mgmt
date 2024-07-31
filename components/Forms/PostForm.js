@@ -20,10 +20,17 @@ export default function PostForm({ obj }) {
   const { user } = useAuth();
 
   useEffect(() => {
-    getCategories().then(setCategories);
-
-    if (obj.id) setFormInput(obj);
+    if (obj?.id) {
+      setFormInput({
+        ...obj,
+        category: obj.category.id,
+      });
+    }
   }, [obj]);
+
+  useEffect(() => {
+    getCategories().then(setCategories);
+  }, []);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -78,10 +85,10 @@ export default function PostForm({ obj }) {
           name="category"
           onChange={handleChange}
           className="mb-3"
-          value={formInput.category.id}
+          value={formInput.category}
           required
         >
-          <option value="" selected disabled>Select a category</option>
+          <option value="">Select a category</option>
           {
             categories.map((category) => (
               <option
@@ -101,7 +108,7 @@ export default function PostForm({ obj }) {
           placeholder="Description"
           style={{ height: '100px' }}
           name="description"
-          value={obj.description || formInput.description}
+          value={formInput.description}
           onChange={handleChange}
           required
         />

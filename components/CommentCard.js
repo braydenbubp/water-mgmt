@@ -44,7 +44,12 @@ CommentCard.propTypes = {
     id: PropTypes.number,
     content: PropTypes.string,
     uid: PropTypes.string,
-    user: PropTypes.string,
+    user: PropTypes.shape({
+      id: PropTypes.number,
+      name: PropTypes.string,
+      uid: PropTypes.string,
+      bio: PropTypes.string,
+    }),
     post: PropTypes.number,
   }).isRequired,
   onUpdate: PropTypes.func.isRequired,
