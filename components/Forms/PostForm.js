@@ -40,7 +40,6 @@ export default function PostForm({ obj }) {
     } else {
       // This only works if the user exists - will need to create a user in the database when somebody logs in for the first time"
       const payload = { ...formInput, uid: user.uid };
-      console.warn('payload', payload);
       createPost(payload).then(() => router.push('/'));
     }
   };

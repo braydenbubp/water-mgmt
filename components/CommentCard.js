@@ -1,23 +1,37 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 // import Link from 'next/link';
 // import { ListGroup } from 'react-bootstrap';
-import { deleteComment } from '../api/commentData';
+import { deleteComment, updateComment } from '../api/commentData';
+import CommentForm from './Forms/CommentForm';
 
 function CommentCard({ commentObj, onUpdate }) {
+  const [cardText, setCardText] = useState(<Card.Text>{commentObj.content}</Card.Text>);
+
   const deleteThisComment = () => {
     if (window.confirm('Delete this comment?')) {
       deleteComment(commentObj.id).then(() => onUpdate());
     }
   };
 
+  const handleSubmit = (obj) => {
+    updateComment(obj).then((updatedCommentObj) => {
+      setCardText(<Card.Text>{updatedCommentObj.content}</Card.Text>);
+      onUpdate();
+    });
+  };
+
+  const editThisComment = () => {
+    setCardText(<CommentForm obj={commentObj} commentPostId={commentObj.post} onSubmit={handleSubmit} />);
+  };
+
   return (
     <Card style={{ width: '800px', margin: '15px' }}>
       <Card.Body>
-        <Card.Text>{commentObj.content}</Card.Text>
-        <Button variant="primary" className="m-2">Edit</Button>
+        {cardText}
+        <Button variant="primary" onClick={editThisComment} className="m-2">Edit</Button>
         <Button variant="danger" onClick={deleteThisComment} className="m-2">Delete</Button>
         {/* <Card.Footer>Date commented: {commentObj.date_posted}</Card.Footer> */}
       </Card.Body>
@@ -31,6 +45,7 @@ CommentCard.propTypes = {
     content: PropTypes.string,
     uid: PropTypes.string,
     user: PropTypes.string,
+    post: PropTypes.number,
   }).isRequired,
   onUpdate: PropTypes.func.isRequired,
 };

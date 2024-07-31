@@ -30,7 +30,7 @@ const getCommentsByPostId = (id) => new Promise((resolve, reject) => {
 
 // GET ALL COMMENTS MADE BY A SINGLE USER
 const getCommentsForSingleUser = (uid) => new Promise((resolve, reject) => {
-  fetch(`${endpoint}/comments?uid=${uid}"`, {
+  fetch(`${endpoint}/comments?user=${uid}"`, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
@@ -56,7 +56,7 @@ const getSingleComment = (id) => new Promise((resolve, reject) => {
 
 // CREATE COMMENT
 const createComment = (userId, postId, comment) => new Promise((resolve, reject) => {
-  fetch(`http://localhost:8000/posts/${postId}/post_comments`, {
+  fetch(`${endpoint}/posts/${postId}/post_comments`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -74,7 +74,7 @@ const createComment = (userId, postId, comment) => new Promise((resolve, reject)
 // UPDATE COMMENT
 const updateComment = (payload) => new Promise((resolve, reject) => {
   fetch(`${endpoint}/comments/${payload.id}`, {
-    method: 'PATCH',
+    method: 'PUT',
     headers: {
       'Content-Type': 'application/json',
     },
@@ -93,7 +93,7 @@ const deleteComment = (id) => new Promise((resolve, reject) => {
       'Content-Type': 'application/json',
     },
   })
-    .then((response) => response.json())
+    .then((response) => response)
     .then((data) => resolve(data))
     .catch(reject);
 });
