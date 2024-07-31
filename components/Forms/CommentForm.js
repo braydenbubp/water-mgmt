@@ -1,4 +1,3 @@
-import { useRouter } from 'next/router';
 import PropTypes from 'prop-types';
 import { useEffect, useState } from 'react';
 import { Button, FloatingLabel, Form } from 'react-bootstrap';
@@ -15,12 +14,9 @@ const initialState = {
 
 export default function CommentForm({ obj, commentPostId, onSubmit }) {
   const [formInput, setFormInput] = useState(initialState);
-  const router = useRouter();
   const { user } = useAuth();
 
-  console.warn(commentPostId);
-
-  // NOT SURE IF THIS IS RIGHT. THE IDEA IS THAT IF WE ARE EDITING A COMMENT, IT WILL SET THE FORMINPUT STATE TO THE VALUES OF THE COMMENT, BUT IF WE ARE CREATING A NEW COMMENT, IT WILL SET THE POST_ID OF THE INITAL STATE TO THE POST_ID ON WHICH WE ARE COMMENTING
+  // IF WE ARE EDITING A COMMENT, THIS WILL SET THE FORMINPUT STATE TO THE VALUES OF THE COMMENT, BUT IF WE ARE CREATING A NEW COMMENT, IT WILL SET THE POST_ID OF THE INITAL STATE TO THE POST_ID ON WHICH WE ARE COMMENTING
   useEffect(() => {
     if (obj.id) {
       setFormInput(obj);
@@ -48,8 +44,7 @@ export default function CommentForm({ obj, commentPostId, onSubmit }) {
         created_on: obj.created_on,
         post: obj.post,
       };
-      // ASSUMING WE ARE VIEWING COMMENTS ON THE POST DETAILS PAGE, SUBMITTING OR EDITING A COMMENT WILL RELOAD THE VIEW POST DETAILS PAGE FOR THAT POST
-      updateComment(updatedComment).then(() => router.push(`/posts/${obj.post}`));
+      updateComment(updatedComment).then(onSubmit);
     } else {
       const payload = {
         user: user.id,
@@ -65,7 +60,7 @@ export default function CommentForm({ obj, commentPostId, onSubmit }) {
 
   return (
     <Form onSubmit={handleSubmit}>
-      <h2 className="text-white mt-5">{obj.id ? 'Update' : 'Create'} Comment</h2>
+      <h4 className="text-white mt-5">{obj.id ? 'Update' : 'Add'} Comment</h4>
 
       {/* CONTENT TEXTAREA  */}
       <FloatingLabel controlId="floatingTextarea" label="Enter your comment" className="mb-3">
@@ -80,7 +75,7 @@ export default function CommentForm({ obj, commentPostId, onSubmit }) {
         />
 
         {/* SUBMIT BUTTON  */}
-        <Button type="submit">{obj.id ? 'Update' : 'Create'} Comment</Button>
+        <Button type="submit">{obj.id ? 'Update' : 'Add'} Comment</Button>
       </FloatingLabel>
 
     </Form>
@@ -89,13 +84,13 @@ export default function CommentForm({ obj, commentPostId, onSubmit }) {
 
 CommentForm.propTypes = {
   obj: PropTypes.shape({
-    id: PropTypes.string,
+    id: PropTypes.number,
     user: PropTypes.string,
     content: PropTypes.string,
     post: PropTypes.string,
     created_on: PropTypes.string,
   }),
-  commentPostId: PropTypes.string.isRequired,
+  commentPostId: PropTypes.number.isRequired,
   onSubmit: PropTypes.func.isRequired,
 };
 

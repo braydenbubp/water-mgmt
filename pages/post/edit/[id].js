@@ -13,7 +13,6 @@ export default function EditPost() {
   useEffect(() => {
     getSinglePost(id).then(setEditItem);
   }, [id]);
-  console.warn(editItem);
   // TODO: pass object to form
   return (<PostForm obj={editItem} />);
 }

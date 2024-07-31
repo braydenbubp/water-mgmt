@@ -3,7 +3,6 @@ import { clientCredentials } from '../utils/client';
 const endpoint = clientCredentials.databaseURL;
 
 const getLikes = () => new Promise((resolve, reject) => {
-  console.warn(endpoint);
   fetch(`${endpoint}/likes`, {
     method: 'GET',
     headers: {

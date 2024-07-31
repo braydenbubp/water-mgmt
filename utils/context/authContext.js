@@ -25,7 +25,6 @@ const AuthProvider = (props) => {
 
   const updateUser = useMemo(
     () => (uid) => checkUser(uid).then((gamerInfo) => {
-      console.warn(gamerInfo);
       setUser({ fbUser: oAuthUser, ...gamerInfo });
     }),
     [oAuthUser],
