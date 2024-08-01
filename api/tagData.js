@@ -71,7 +71,7 @@ const createTag = (payload) => new Promise((resolve, reject) => {
 // UPDATE TAG
 const updateTag = (payload) => new Promise((resolve, reject) => {
   fetch(`${endpoint}/tags/${payload.id}`, {
-    method: 'PATCH',
+    method: 'PUT',
     headers: {
       'Content-Type': 'application/json',
     },

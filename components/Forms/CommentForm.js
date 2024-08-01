@@ -85,7 +85,12 @@ export default function CommentForm({ obj, commentPostId, onSubmit }) {
 CommentForm.propTypes = {
   obj: PropTypes.shape({
     id: PropTypes.number,
-    user: PropTypes.string,
+    user: PropTypes.shape({
+      id: PropTypes.number,
+      name: PropTypes.string,
+      uid: PropTypes.string,
+      bio: PropTypes.string,
+    }),
     content: PropTypes.string,
     post: PropTypes.string,
     created_on: PropTypes.string,
