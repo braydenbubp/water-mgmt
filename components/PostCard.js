@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import Link from 'next/link';
-import { ListGroup } from 'react-bootstrap';
+import { ListGroup, ListGroupItem } from 'react-bootstrap';
 import { deletePost } from '../api/postData';
 
 function PostCard({ postObj, onUpdate }) {
@@ -21,8 +21,11 @@ function PostCard({ postObj, onUpdate }) {
         {/* <Card.Subtitle>{postObj.category.label}</Card.Subtitle> */}
         <Card.Text>{postObj.description}</Card.Text>
         <ListGroup className="list-group-flush">
-          <ListGroup.Item>Likes: {postObj.likes}</ListGroup.Item>
-          <ListGroup.Item>Tags: {postObj.tags}</ListGroup.Item>
+          <ListGroupItem>Likes: {postObj.likes}</ListGroupItem>
+          <ListGroupItem>Tags: {postObj.tags?.map((tag) => (
+            tag.label
+          )).join(', ')}
+          </ListGroupItem>
         </ListGroup>
         <Button variant="secondary" className="m-2">Like</Button>
         <Button variant="secondary" className="m-2">Dislike</Button>
@@ -58,7 +61,10 @@ PostCard.propTypes = {
       label: PropTypes.string,
     }),
     likes: PropTypes.number,
-    tags: PropTypes.arrayOf(PropTypes.string),
+    tags: PropTypes.arrayOf(PropTypes.shape({
+      id: PropTypes.number,
+      label: PropTypes.string,
+    })),
   }).isRequired,
   onUpdate: PropTypes.func.isRequired,
 };

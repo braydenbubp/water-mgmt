@@ -42,7 +42,10 @@ export default function ViewPost() {
         <p>Written by: {postDetails.user?.name}</p>
         <p>Description: {postDetails.description}</p>
         <p>Likes: {postDetails.likes}</p>
-        <p>Tags: {postDetails.tags}</p>
+        <p>Tags: {postDetails.tags?.map((tag) => (
+          tag.label
+        ))}
+        </p>
         <div>
           <p>Comments:</p>
           {comments.map((comment) => (
