@@ -1,21 +1,30 @@
 import { useRouter } from 'next/router';
 import PropTypes from 'prop-types';
-import { useEffect, useState } from 'react';
+import { React, useEffect, useState } from 'react';
 import { Button, FloatingLabel, Form } from 'react-bootstrap';
+// import Select from 'react-select';
+// import Creatable, { useCreatable } from 'react-select/creatable';
+import CreatableSelect from 'react-select/creatable';
+// import AsyncSelect from 'react-select/async';
+// import AsyncCreatableSelect from 'react-select/async-creatable';
 import { useAuth } from '../../utils/context/authContext';
 import { createPost, updatePost } from '../../api/postData';
 import getCategories from '../../api/categoryData';
+import { getTags } from '../../api/tagData';
 
 const initialState = {
   title: '',
   image_url: '',
   description: '',
   category: {},
+  tags: [],
 };
 
 export default function PostForm({ obj }) {
   const [formInput, setFormInput] = useState(initialState);
   const [categories, setCategories] = useState([]);
+  const [tags, setTags] = useState([]);
+  // const [newTags, setNewTags] = useState([]);
   const router = useRouter();
   const { user } = useAuth();
 
@@ -24,12 +33,17 @@ export default function PostForm({ obj }) {
       setFormInput({
         ...obj,
         category: obj.category.id,
+        tags: obj.tags.id,
       });
     }
   }, [obj]);
 
   useEffect(() => {
     getCategories().then(setCategories);
+  }, []);
+
+  useEffect(() => {
+    getTags().then(setTags);
   }, []);
 
   const handleChange = (e) => {
@@ -39,6 +53,24 @@ export default function PostForm({ obj }) {
       [name]: value,
     }));
   };
+
+  const handleTagChange = (selectedOption) => {
+    // setNewTags((prevTags) => [...prevTags, selectedOption]);
+    const tagArray = selectedOption.map((option) => (
+      option.value
+    ));
+    setFormInput((prevState) => ({
+      ...prevState,
+      tags: tagArray,
+    }));
+  };
+
+  // const loadOptions = (searchValue, callback) => {
+  //   setTimeout(() => {
+  //     const filteredOptions = tags.filter((tag) => tag.label.toLowerCase().includes(searchValue.toLowerCase()));
+  //     callback(filteredOptions);
+  //   }, 2000);
+  // };
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -54,7 +86,9 @@ export default function PostForm({ obj }) {
   return (
     <Form onSubmit={handleSubmit}>
       <h2 className="text-white mt-5">{obj.id ? 'Update' : 'Create'} Post</h2>
-
+      {/* {tags.map((tag) => (
+        <p>{tag.label}</p>
+      ))} */}
       {/* TITLE INPUT  */}
       <FloatingLabel controlId="floatingInput1" label="Post Title" className="mb-3">
         <Form.Control
@@ -112,10 +146,49 @@ export default function PostForm({ obj }) {
           onChange={handleChange}
           required
         />
-
-        {/* SUBMIT BUTTON  */}
-        <Button type="submit">{obj.id ? 'Update' : 'Create'} Post</Button>
       </FloatingLabel>
+      {/* tag SELECT  */}
+      {/* <FloatingLabel controlId="floatingSelect" label="tags">
+        <Form.Select
+          aria-label="tags"
+          name="tags"
+          onChange={handleTagChange}
+          className="mb-3"
+          value={[formInput.tags]}
+          required
+          multiple
+        >
+          {
+            tags.map((tag) => (
+              <option
+                key={tag.id}
+                value={tag.id}
+              >
+                {tag.label}
+              </option>
+            ))
+          }
+        </Form.Select>
+      </FloatingLabel> */}
+      <CreatableSelect
+        aria-label="tags"
+        name="tags"
+        className="mb-3"
+        // value={formInput.tags}
+        required
+        isMulti
+        onChange={handleTagChange}
+        // loadOptions={loadOptions}
+        options={
+          tags.map((tag) => (
+            {
+              value: tag.id, label: tag.label,
+            }
+          ))
+        }
+      />
+      {/* SUBMIT BUTTON  */}
+      <Button type="submit">{obj.id ? 'Update' : 'Create'} Post</Button>
 
     </Form>
   );
@@ -138,7 +211,10 @@ PostForm.propTypes = {
       label: PropTypes.string,
     }),
     likes: PropTypes.number,
-    tags: PropTypes.arrayOf(PropTypes.string),
+    tags: PropTypes.arrayOf(PropTypes.shape({
+      id: PropTypes.number,
+      label: PropTypes.string,
+    })),
   }),
 };
 
