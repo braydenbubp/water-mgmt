@@ -57,11 +57,13 @@ const getSingleTag = (id) => new Promise((resolve, reject) => {
 // CREATE TAG
 const createTag = (payload) => new Promise((resolve, reject) => {
   fetch(`${endpoint}/tags`, {
-    method: 'TAG',
+    method: 'POST',
     headers: {
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify(payload),
+    body: JSON.stringify({
+      label: payload,
+    }),
   })
     .then((response) => response.json())
     .then((data) => resolve(data))
