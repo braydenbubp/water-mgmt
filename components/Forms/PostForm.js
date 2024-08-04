@@ -50,7 +50,25 @@ export default function PostForm({ obj }) {
     }));
   };
 
+  // const handleCreate = (inputValue) => {
+  //   setNewTags((prevState) => ({
+  //     ...prevState,
+  //     inputValue,
+  //   }));
+  // };
+
   const handleTagChange = (selectedOption) => {
+    // eslint-disable-next-line no-underscore-dangle
+    // if (typeof selectedOption[0].value === 'string') {
+    //   console.warn('it is string');
+    //   const newTagArray = selectedOption.map((option) => (
+    //     option.value
+    //   ));
+    //   setNewTags((prevState) => ({
+    //     ...prevState,
+    //     newTagArray,
+    //   }));
+    // } else {
     const tagArray = selectedOption.map((option) => (
       option.value
     ));
@@ -58,6 +76,10 @@ export default function PostForm({ obj }) {
       ...prevState,
       tags: tagArray,
     }));
+    // }
+    console.warn(selectedOption);
+    console.warn('formInput.tags', formInput.tags);
+    // console.warn('newTags', newTags);
   };
 
   const handleSubmit = (e) => {
@@ -65,24 +87,51 @@ export default function PostForm({ obj }) {
     if (obj.id) {
       updatePost(formInput).then(() => router.push(`/post/${obj.id}`));
     } else {
-      const finalTagArray = [];
+      // const oldTagArray = [];
+      // const newTagArray = [];
+      // for (let i = 0; i < formInput.tags.length; i++) {
+      //   if (tags.find((tag) => tag.id === formInput.tags[i])) {
+      //     oldTagArray.push(formInput.tags[i]);
+      //   } else {
+      //     createTag(formInput.tags[i]).then((newTagObj) => {
+      //       newTagArray.push(newTagObj.id);
+      //     });
+      //   }
+      // }
+
+      // for (let i = 0; i < newTags.length; i++) {
+      //   createTag(newTags[i]);
+      // }
+      // const payload = { ...formInput, uid: user.uid };
+      // if (newTags.length === 0) {
+      //   createPost(payload).then(() => {
+      //     router.push('/');
+      //   });
+      // } else {
+      //   createPost(payload).then((newPost) => {
+      //     const patchPayload = { ...newPost, tags: newTags };
+      //     updatePost(patchPayload).then(() => {
+      //       router.push('/');
+      //     });
+      //   });
+      // }
+      const newTagArray = [];
       for (let i = 0; i < formInput.tags.length; i++) {
         if (tags.find((tag) => tag.id === formInput.tags[i])) {
-          finalTagArray.push(formInput.tags[i]);
+          break;
         } else {
-          createTag(formInput.tags[i]).then((newTagObj) => {
-            finalTagArray.push(newTagObj.id);
-            console.warn('newTagObj.id', newTagObj.id);
+          createTag(formInput.tags[i]).then((newTag) => {
+            newTagArray.push(newTag);
           });
         }
-        console.warn('finalTagArray', finalTagArray);
       }
-      setFormInput((prevState) => ({
-        ...prevState,
-        tags: finalTagArray,
-      }));
-      const payload = { ...formInput, uid: user.uid, tags: finalTagArray };
-      createPost(payload).then(() => router.push('/'));
+      const payload = { ...formInput, uid: user.uid };
+      createPost(payload).then((newPost) => {
+        const patchPayload = { ...newPost, tags: newTagArray };
+        updatePost(patchPayload).then(() => {
+          router.push('/');
+        });
+      });
     }
   };
 
@@ -159,6 +208,7 @@ export default function PostForm({ obj }) {
         required
         isMulti
         onChange={handleTagChange}
+        // onCreateOption={handleCreate}
         options={
           tags.map((tag) => (
             {
