@@ -12,7 +12,7 @@ const initialState = {
   title: '',
   image_url: '',
   description: '',
-  category: {},
+  category: 0,
   tags: [],
 };
 
@@ -20,7 +20,8 @@ export default function PostForm({ obj }) {
   const [formInput, setFormInput] = useState(initialState);
   const [categories, setCategories] = useState([]);
   const [tags, setTags] = useState([]);
-  // const [newTags, setNewTags] = useState([]);
+  const [newTags, setNewTags] = useState([]);
+  const [createdTags, setCreatedTags] = useState([]);
   const router = useRouter();
   const { user } = useAuth();
 
@@ -50,88 +51,51 @@ export default function PostForm({ obj }) {
     }));
   };
 
-  // const handleCreate = (inputValue) => {
-  //   setNewTags((prevState) => ({
-  //     ...prevState,
-  //     inputValue,
-  //   }));
-  // };
-
   const handleTagChange = (selectedOption) => {
-    // eslint-disable-next-line no-underscore-dangle
-    // if (typeof selectedOption[0].value === 'string') {
-    //   console.warn('it is string');
-    //   const newTagArray = selectedOption.map((option) => (
-    //     option.value
-    //   ));
-    //   setNewTags((prevState) => ({
-    //     ...prevState,
-    //     newTagArray,
-    //   }));
-    // } else {
-    const tagArray = selectedOption.map((option) => (
-      option.value
-    ));
+    const newTagArray = [];
+    const tagArray = [];
+    for (let i = 0; i < selectedOption.length; i++) {
+      // eslint-disable-next-line no-underscore-dangle
+      if (selectedOption[i].__isNew__ === true) {
+        newTagArray.push(selectedOption[i].value);
+      } else {
+        tagArray.push(selectedOption[i].value);
+      }
+    }
+    setNewTags(newTagArray);
     setFormInput((prevState) => ({
       ...prevState,
       tags: tagArray,
     }));
-    // }
-    console.warn(selectedOption);
-    console.warn('formInput.tags', formInput.tags);
-    // console.warn('newTags', newTags);
   };
 
-  const handleSubmit = (e) => {
+  const createTags = async () => {
+    console.warn('newTags', newTags);
+    const createdTagArray = [];
+    for (let i = 0; i < newTags.length; i++) {
+      console.warn('newTags[i]', newTags[i]);
+      createTag(newTags[i]).then((brandNewTag) => {
+        createdTagArray.push(brandNewTag.id);
+      });
+    }
+    setCreatedTags(createdTagArray);
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    if (obj.id) {
+    if (obj?.id) {
       updatePost(formInput).then(() => router.push(`/post/${obj.id}`));
     } else {
-      // const oldTagArray = [];
-      // const newTagArray = [];
-      // for (let i = 0; i < formInput.tags.length; i++) {
-      //   if (tags.find((tag) => tag.id === formInput.tags[i])) {
-      //     oldTagArray.push(formInput.tags[i]);
-      //   } else {
-      //     createTag(formInput.tags[i]).then((newTagObj) => {
-      //       newTagArray.push(newTagObj.id);
-      //     });
-      //   }
-      // }
-
-      // for (let i = 0; i < newTags.length; i++) {
-      //   createTag(newTags[i]);
-      // }
-      // const payload = { ...formInput, uid: user.uid };
-      // if (newTags.length === 0) {
-      //   createPost(payload).then(() => {
-      //     router.push('/');
-      //   });
-      // } else {
-      //   createPost(payload).then((newPost) => {
-      //     const patchPayload = { ...newPost, tags: newTags };
-      //     updatePost(patchPayload).then(() => {
-      //       router.push('/');
-      //     });
-      //   });
-      // }
-      const newTagArray = [];
-      for (let i = 0; i < formInput.tags.length; i++) {
-        if (tags.find((tag) => tag.id === formInput.tags[i])) {
-          break;
-        } else {
-          createTag(formInput.tags[i]).then((newTag) => {
-            newTagArray.push(newTag);
-          });
-        }
-      }
+      await createTags();
+      console.warn('createdTags', createdTags);
       const payload = { ...formInput, uid: user.uid };
-      createPost(payload).then((newPost) => {
-        const patchPayload = { ...newPost, tags: newTagArray };
+      await createPost(payload).then((newPost) => {
+        const patchPayload = { ...newPost, tags: createdTags, category: formInput.category };
         updatePost(patchPayload).then(() => {
           router.push('/');
         });
       });
+      // createPost(payload).then(router.push('/'));
     }
   };
 
@@ -212,7 +176,7 @@ export default function PostForm({ obj }) {
         options={
           tags.map((tag) => (
             {
-              value: tag.id, label: tag.label,
+              value: parseInt(tag.id, 10), label: tag.label,
             }
           ))
         }
@@ -236,10 +200,7 @@ PostForm.propTypes = {
       uid: PropTypes.string,
       bio: PropTypes.string,
     }),
-    category: PropTypes.shape({
-      id: PropTypes.number,
-      label: PropTypes.string,
-    }),
+    category: PropTypes.number,
     likes: PropTypes.number,
     tags: PropTypes.arrayOf(PropTypes.shape({
       id: PropTypes.number,
