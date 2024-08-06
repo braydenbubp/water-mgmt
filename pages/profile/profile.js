@@ -1,6 +1,6 @@
 import { Button, Card } from 'react-bootstrap';
 import { useEffect, useState } from 'react';
-import Link from 'next/link';
+// import Link from 'next/link';
 import { useAuth } from '../../utils/context/authContext';
 import PostCard from '../../components/PostCard';
 import { getPostsForSingleUser } from '../../api/postData';
@@ -14,23 +14,22 @@ export default function Profile() {
   };
   useEffect(() => {
     userPosts();
-  }, []);
+  });
 
   return (
     <>
-      <Card style={{ width: '24rem', margin: '10px' }}>
+      <Card style={{ width: '15rem', margin: '10px' }}>
         <Card.Body>
           <Card.Title>{user.name}</Card.Title>
-          <Link href="/profile/new" passHref>
+          {/* <Link href="/profile/new" passHref>
             <Button variant="primary" className="m-2">Edit</Button>
-          </Link>
+          </Link> */}
           <p className="card-text bold">Bio {user.bio}</p>
           <div style={{ display: 'flex', justifyContent: 'right' }}><Button variant="danger" onClick={signOut}>Sign Out</Button></div>
         </Card.Body>
       </Card>
-      {/* not sure if this works at getting user posts yet need data to test it */}
+      <h2>Posts</h2>
       <div className="d-flex flex-wrap" style={{ width: '100%' }}>
-        <p>POSTS</p>
         {posts.map((post) => (
           <PostCard key={post.uid} postObj={post} onUpdate={userPosts} />
         ))}

@@ -1,4 +1,3 @@
-import React from 'react';
 import PropTypes from 'prop-types';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
@@ -27,8 +26,6 @@ function PostCard({ postObj, onUpdate }) {
           )).join(', ')}
           </ListGroupItem>
         </ListGroup>
-        <Button variant="secondary" className="m-2">Like</Button>
-        <Button variant="secondary" className="m-2">Dislike</Button>
         {/* DYNAMIC LINK TO VIEW THE POST DETAILS */}
         <Link href={`/post/${postObj.id}`} passHref>
           <Button variant="primary" className="m-2">View</Button>
@@ -38,7 +35,7 @@ function PostCard({ postObj, onUpdate }) {
           <Button variant="primary" className="m-2">Edit</Button>
         </Link>
         <Button variant="danger" onClick={deleteThisPost} className="m-2">Delete</Button>
-        <Card.Footer>Date posted:</Card.Footer>
+        {/* <Card.Footer>Date posted: </Card.Footer> */}
       </Card.Body>
     </Card>
   );
@@ -48,6 +45,7 @@ PostCard.propTypes = {
   postObj: PropTypes.shape({
     id: PropTypes.number,
     title: PropTypes.string,
+    postDate: PropTypes.string,
     image_url: PropTypes.string,
     description: PropTypes.string,
     user: PropTypes.shape({
