@@ -2,11 +2,7 @@ import { useRouter } from 'next/router';
 import PropTypes from 'prop-types';
 import { React, useEffect, useState } from 'react';
 import { Button, FloatingLabel, Form } from 'react-bootstrap';
-// import Select from 'react-select';
-// import Creatable, { useCreatable } from 'react-select/creatable';
 import CreatableSelect from 'react-select/creatable';
-// import AsyncSelect from 'react-select/async';
-// import AsyncCreatableSelect from 'react-select/async-creatable';
 import { useAuth } from '../../utils/context/authContext';
 import { createPost, updatePost } from '../../api/postData';
 import getCategories from '../../api/categoryData';
@@ -16,7 +12,7 @@ const initialState = {
   title: '',
   image_url: '',
   description: '',
-  category: {},
+  category: 0,
   tags: [],
 };
 
@@ -24,7 +20,8 @@ export default function PostForm({ obj }) {
   const [formInput, setFormInput] = useState(initialState);
   const [categories, setCategories] = useState([]);
   const [tags, setTags] = useState([]);
-  // const [newTags, setNewTags] = useState([]);
+  const [selectedTags, setSelectedTags] = useState([]);
+  const [newTags, setNewTags] = useState([]);
   const router = useRouter();
   const { user } = useAuth();
 
@@ -33,8 +30,9 @@ export default function PostForm({ obj }) {
       setFormInput({
         ...obj,
         category: obj.category.id,
-        tags: obj.tags.id,
+        tags: obj.tags,
       });
+      setSelectedTags(obj.tags);
     }
   }, [obj]);
 
@@ -55,31 +53,33 @@ export default function PostForm({ obj }) {
   };
 
   const handleTagChange = (selectedOption) => {
-    // setNewTags((prevTags) => [...prevTags, selectedOption]);
-    const tagArray = selectedOption.map((option) => (
-      option.value
-    ));
-    setFormInput((prevState) => ({
-      ...prevState,
-      tags: tagArray,
-    }));
+    const newTagArray = [];
+    const tagArray = [];
+    for (let i = 0; i < selectedOption.length; i++) {
+      // eslint-disable-next-line no-underscore-dangle
+      if (selectedOption[i].__isNew__ === true) {
+        newTagArray.push(selectedOption[i].value);
+      } else {
+        tagArray.push(selectedOption[i].value);
+      }
+    }
+    setNewTags(newTagArray);
+    setSelectedTags(tagArray);
   };
-
-  // const loadOptions = (searchValue, callback) => {
-  //   setTimeout(() => {
-  //     const filteredOptions = tags.filter((tag) => tag.label.toLowerCase().includes(searchValue.toLowerCase()));
-  //     callback(filteredOptions);
-  //   }, 2000);
-  // };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (obj.id) {
-      updatePost(formInput).then(() => router.push(`/post/${obj.id}`));
+
+    if (obj?.id) {
+      const payload = {
+        ...formInput, uid: user.uid, tags: selectedTags, newTags,
+      };
+      updatePost(payload).then(() => router.push('/'));
     } else {
-      // This only works if the user exists - will need to create a user in the database when somebody logs in for the first time"
-      const payload = { ...formInput, uid: user.uid };
-      createPost(payload).then(() => router.push('/'));
+      const payload = {
+        ...formInput, uid: user.uid, tags: selectedTags, newTags,
+      };
+      createPost(payload).then(router.push('/'));
     }
   };
 
@@ -148,28 +148,6 @@ export default function PostForm({ obj }) {
         />
       </FloatingLabel>
       {/* tag SELECT  */}
-      {/* <FloatingLabel controlId="floatingSelect" label="tags">
-        <Form.Select
-          aria-label="tags"
-          name="tags"
-          onChange={handleTagChange}
-          className="mb-3"
-          value={[formInput.tags]}
-          required
-          multiple
-        >
-          {
-            tags.map((tag) => (
-              <option
-                key={tag.id}
-                value={tag.id}
-              >
-                {tag.label}
-              </option>
-            ))
-          }
-        </Form.Select>
-      </FloatingLabel> */}
       <CreatableSelect
         aria-label="tags"
         name="tags"
@@ -178,11 +156,11 @@ export default function PostForm({ obj }) {
         required
         isMulti
         onChange={handleTagChange}
-        // loadOptions={loadOptions}
+        // onCreateOption={handleCreate}
         options={
           tags.map((tag) => (
             {
-              value: tag.id, label: tag.label,
+              value: parseInt(tag.id, 10), label: tag.label,
             }
           ))
         }
