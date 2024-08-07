@@ -6,7 +6,7 @@ import CreatableSelect from 'react-select/creatable';
 import { useAuth } from '../../utils/context/authContext';
 import { createPost, updatePost } from '../../api/postData';
 import getCategories from '../../api/categoryData';
-import { createTag, getTags } from '../../api/tagData';
+import { getTags } from '../../api/tagData';
 
 const initialState = {
   title: '',
@@ -20,8 +20,8 @@ export default function PostForm({ obj }) {
   const [formInput, setFormInput] = useState(initialState);
   const [categories, setCategories] = useState([]);
   const [tags, setTags] = useState([]);
+  const [selectedTags, setSelectedTags] = useState([]);
   const [newTags, setNewTags] = useState([]);
-  const [createdTags, setCreatedTags] = useState([]);
   const router = useRouter();
   const { user } = useAuth();
 
@@ -30,8 +30,9 @@ export default function PostForm({ obj }) {
       setFormInput({
         ...obj,
         category: obj.category.id,
-        tags: obj.tags.id,
+        tags: obj.tags,
       });
+      setSelectedTags(obj.tags);
     }
   }, [obj]);
 
@@ -63,39 +64,22 @@ export default function PostForm({ obj }) {
       }
     }
     setNewTags(newTagArray);
-    setFormInput((prevState) => ({
-      ...prevState,
-      tags: tagArray,
-    }));
+    setSelectedTags(tagArray);
   };
 
-  const createTags = async () => {
-    console.warn('newTags', newTags);
-    const createdTagArray = [];
-    for (let i = 0; i < newTags.length; i++) {
-      console.warn('newTags[i]', newTags[i]);
-      createTag(newTags[i]).then((brandNewTag) => {
-        createdTagArray.push(brandNewTag.id);
-      });
-    }
-    setCreatedTags(createdTagArray);
-  };
-
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
+
     if (obj?.id) {
-      updatePost(formInput).then(() => router.push(`/post/${obj.id}`));
+      const payload = {
+        ...formInput, uid: user.uid, tags: selectedTags, newTags,
+      };
+      updatePost(payload).then(() => router.push('/'));
     } else {
-      await createTags();
-      console.warn('createdTags', createdTags);
-      const payload = { ...formInput, uid: user.uid };
-      await createPost(payload).then((newPost) => {
-        const patchPayload = { ...newPost, tags: createdTags, category: formInput.category };
-        updatePost(patchPayload).then(() => {
-          router.push('/');
-        });
-      });
-      // createPost(payload).then(router.push('/'));
+      const payload = {
+        ...formInput, uid: user.uid, tags: selectedTags, newTags,
+      };
+      createPost(payload).then(router.push('/'));
     }
   };
 
@@ -200,7 +184,10 @@ PostForm.propTypes = {
       uid: PropTypes.string,
       bio: PropTypes.string,
     }),
-    category: PropTypes.number,
+    category: PropTypes.shape({
+      id: PropTypes.number,
+      label: PropTypes.string,
+    }),
     likes: PropTypes.number,
     tags: PropTypes.arrayOf(PropTypes.shape({
       id: PropTypes.number,
