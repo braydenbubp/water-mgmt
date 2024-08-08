@@ -30,9 +30,17 @@ export default function PostForm({ obj }) {
       setFormInput({
         ...obj,
         category: obj.category.id,
-        tags: obj.tags,
       });
-      setSelectedTags(obj.tags);
+    }
+  }, [obj]);
+
+  useEffect(() => {
+    const prevTags = [];
+    if (obj?.id) {
+      obj.tags.forEach((tag) => {
+        prevTags.push({ value: tag.id, label: tag.label });
+      });
+      setSelectedTags(prevTags);
     }
   }, [obj]);
 
@@ -55,30 +63,34 @@ export default function PostForm({ obj }) {
   const handleTagChange = (selectedOption) => {
     const newTagArray = [];
     const tagArray = [];
-    for (let i = 0; i < selectedOption.length; i++) {
+    selectedOption.forEach((option) => {
       // eslint-disable-next-line no-underscore-dangle
-      if (selectedOption[i].__isNew__ === true) {
-        newTagArray.push(selectedOption[i].value);
+      if (option.__isNew__) {
+        newTagArray.push({ value: option.value, label: option.label });
       } else {
-        tagArray.push(selectedOption[i].value);
+        tagArray.push({ value: option.value, label: option.label });
       }
-    }
-    setNewTags(newTagArray);
+    });
     setSelectedTags(tagArray);
+    setNewTags(newTagArray);
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
+    const tagIds = selectedTags.map((tag) => tag.value);
+    const newTagLabels = newTags.map((tag) => tag.value);
+
+    const payload = {
+      ...formInput,
+      uid: user.uid,
+      tags: tagIds,
+      newTags: newTagLabels,
+    };
+
     if (obj?.id) {
-      const payload = {
-        ...formInput, uid: user.uid, tags: selectedTags, newTags,
-      };
       updatePost(payload).then(() => router.push('/'));
     } else {
-      const payload = {
-        ...formInput, uid: user.uid, tags: selectedTags, newTags,
-      };
       createPost(payload).then(router.push('/'));
     }
   };
@@ -86,9 +98,6 @@ export default function PostForm({ obj }) {
   return (
     <Form onSubmit={handleSubmit}>
       <h2 className="text-white mt-5">{obj.id ? 'Update' : 'Create'} Post</h2>
-      {/* {tags.map((tag) => (
-        <p>{tag.label}</p>
-      ))} */}
       {/* TITLE INPUT  */}
       <FloatingLabel controlId="floatingInput1" label="Post Title" className="mb-3">
         <Form.Control
@@ -152,11 +161,10 @@ export default function PostForm({ obj }) {
         aria-label="tags"
         name="tags"
         className="mb-3"
-        // value={formInput.tags}
+        value={[...selectedTags, ...newTags]}
         required
         isMulti
         onChange={handleTagChange}
-        // onCreateOption={handleCreate}
         options={
           tags.map((tag) => (
             {
