@@ -33,8 +33,6 @@ export default function PostForm({ obj }) {
       });
     }
   }, [obj]);
-  console.warn(formInput);
-  console.warn(selectedTags);
 
   useEffect(() => {
     const prevTags = [];
