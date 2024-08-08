@@ -12,7 +12,9 @@ const initialState = {
   created_on: '',
 };
 
-export default function CommentForm({ obj, commentPostId, onSubmit }) {
+export default function CommentForm({
+  obj, commentPostId, onSubmit, onCancel,
+}) {
   const [formInput, setFormInput] = useState(initialState);
   const { user } = useAuth();
 
@@ -59,15 +61,21 @@ export default function CommentForm({ obj, commentPostId, onSubmit }) {
   };
 
   return (
-    <Form onSubmit={handleSubmit}>
-      <h4 className="text-white mt-5">{obj.id ? 'Update' : 'Add'} Comment</h4>
+    <Form
+      style={
+        {
+          width: '400px', display: 'flex',
+        }
+      }
+      onSubmit={handleSubmit}
+    >
 
       {/* CONTENT TEXTAREA  */}
-      <FloatingLabel controlId="floatingTextarea" label="Enter your comment" className="mb-3">
+      <FloatingLabel controlId="floatingTextarea" label={obj.id ? 'Update your comment' : 'Enter your comment'} className="mb-3">
         <Form.Control
           as="textarea"
-          placeholder="Enter your comment"
-          style={{ height: '200px', width: '400px' }}
+          placeholder={obj.id ? 'Update your comment' : 'Enter your comment'}
+          style={{ height: '100px', width: '360px' }}
           name="content"
           value={formInput.content}
           onChange={handleChange}
@@ -75,7 +83,8 @@ export default function CommentForm({ obj, commentPostId, onSubmit }) {
         />
 
         {/* SUBMIT BUTTON  */}
-        <Button type="submit">{obj.id ? 'Update' : 'Add'} Comment</Button>
+        <Button style={{ marginTop: '10px' }} type="submit">{obj.id ? 'Update' : 'Add'} Comment</Button>
+        {obj.id ? <Button style={{ marginTop: '10px' }} onClick={onCancel}>Cancel</Button> : ''}
       </FloatingLabel>
 
     </Form>
@@ -97,6 +106,7 @@ CommentForm.propTypes = {
   }),
   commentPostId: PropTypes.number.isRequired,
   onSubmit: PropTypes.func.isRequired,
+  onCancel: PropTypes.func.isRequired,
 };
 
 CommentForm.defaultProps = {

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import PropTypes from 'prop-types';
+import { Accordion } from 'react-bootstrap';
 import { getSinglePost } from '../../api/postData';
 import { getCommentsByPostId } from '../../api/commentData';
 import CommentCard from '../../components/CommentCard';
@@ -17,6 +18,8 @@ export default function ViewPost() {
   const { id } = router.query;
   const [postDetails, setPostDetails] = useState({});
   const [comments, setComments] = useState([]);
+
+  const postId = Number(id);
 
   const getThePost = () => {
     getSinglePost(id).then(setPostDetails);
@@ -51,7 +54,14 @@ export default function ViewPost() {
           {comments.map((comment) => (
             <CommentCard key={comment.id} commentObj={comment} onUpdate={getCommentsByPost} />
           ))}
-          <CommentForm commentPostId={id} onSubmit={getCommentsByPost} />
+          <Accordion style={{ width: '400px', margin: '15px' }} flush>
+            <Accordion.Item eventKey="0">
+              <Accordion.Header><h5>Leave a Comment</h5></Accordion.Header>
+              <Accordion.Body>
+                <CommentForm commentPostId={postId} onSubmit={getCommentsByPost} />
+              </Accordion.Body>
+            </Accordion.Item>
+          </Accordion>
         </div>
       </div>
     </div>
