@@ -14,8 +14,6 @@ export default function Profile() {
     getPostsForSingleUser(user.uid).then(setPosts);
   };
 
-  console.warn(user.uid);
-
   useEffect(() => {
     getUserPosts();
   }, []);
