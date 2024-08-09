@@ -4,6 +4,7 @@ import Card from 'react-bootstrap/Card';
 import Link from 'next/link';
 import { ListGroup, ListGroupItem } from 'react-bootstrap';
 import { deletePost } from '../api/postData';
+import { useAuth } from '../utils/context/authContext';
 
 function PostCard({ postObj, onUpdate }) {
   const deleteThisPost = () => {
@@ -11,6 +12,8 @@ function PostCard({ postObj, onUpdate }) {
       deletePost(postObj.id).then(() => onUpdate());
     }
   };
+
+  const { user } = useAuth();
 
   return (
     <Card style={{ width: '300px', margin: '15px' }}>
@@ -20,7 +23,7 @@ function PostCard({ postObj, onUpdate }) {
         {/* <Card.Subtitle>{postObj.category.label}</Card.Subtitle> */}
         <Card.Text>{postObj.description}</Card.Text>
         <ListGroup className="list-group-flush">
-          <ListGroupItem>Likes: {postObj.likes}</ListGroupItem>
+          {/* <ListGroupItem>Likes: {postObj.likes}</ListGroupItem> */}
           <ListGroupItem>Tags: {postObj.tags?.map((tag) => (
             tag.label
           )).join(', ')}
@@ -31,10 +34,12 @@ function PostCard({ postObj, onUpdate }) {
           <Button variant="primary" className="m-2">View</Button>
         </Link>
         {/* DYNAMIC LINK TO EDIT THE POST DETAILS */}
-        <Link href={`/post/edit/${postObj.id}`} passHref>
-          <Button variant="primary" className="m-2">Edit</Button>
-        </Link>
-        <Button variant="danger" onClick={deleteThisPost} className="m-2">Delete</Button>
+        {user.uid === postObj.user.uid ? (
+          <Link href={`/post/edit/${postObj.id}`} passHref>
+            <Button variant="primary" className="m-2">Edit</Button>
+          </Link>
+        ) : ''}
+        {user.uid === postObj.user.uid ? <Button variant="danger" onClick={deleteThisPost} className="m-2">Delete</Button> : ''}
         {/* <Card.Footer>Date posted: </Card.Footer> */}
       </Card.Body>
     </Card>
