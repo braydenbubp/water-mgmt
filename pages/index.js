@@ -3,13 +3,15 @@ import React, { useEffect, useState } from 'react';
 // import { Button } from 'react-bootstrap';
 // import { signOut } from '../utils/auth';
 import Link from 'next/link';
+import { Form } from 'react-bootstrap';
+import { ImSearch } from 'react-icons/im';
 import { useAuth } from '../utils/context/authContext';
-import { getPosts } from '../api/postData';
+import { getPosts, searchPosts } from '../api/postData';
 import PostCard from '../components/PostCard';
 
 function Home() {
   const [posts, setPosts] = useState([]);
-
+  // const [currentFilter, setCurrentFilter] = useState({});
   const { user } = useAuth();
 
   const getAllThePosts = () => {
@@ -20,18 +22,60 @@ function Home() {
     getAllThePosts();
   }, []);
 
+  // const filterThePosts = (filter) => {
+  //   filterPostsByCategory(filter).then((filteredPosts) => {
+  //     setPosts(filteredPosts);
+  //   });
+  // };
+
+  const searchForPosts = (e) => {
+    searchPosts(e.target.value).then((filteredPosts) => {
+      if (filteredPosts.length === 0 && !e) {
+        getAllThePosts();
+      } else {
+        setPosts(filteredPosts);
+      }
+    });
+  };
+
   return (
     <>
       <h1 style={{ width: '100%', textAlign: 'center', margin: '20px' }}>Hello, {user.name}! Check out these posts!</h1>
+      <div style={{ display: 'flex', justifyContent: 'center' }}>
+        <div style={{ display: 'flex', marginBottom: '30px', width: '75%' }}>
+          <ImSearch style={{ marginTop: '10px', marginRight: '5px' }} />
+          <Form style={{ width: '100%' }}>
+            <Form.Control
+              type="text"
+              placeholder="Filter by post title or category"
+              name="search"
+              // value={searchValue}
+              onChange={searchForPosts}
+              required
+            />
+          </Form>
+          {/* <Dropdown>
+            <Dropdown.Toggle variant="info" id="dropdown-basic">
+              Filter
+            </Dropdown.Toggle>
+
+            <Dropdown.Menu>
+              <Dropdown.Item onSelect={filterThePosts('personal')}>Personal</Dropdown.Item>
+              <Dropdown.Item href="#/action-2">Business</Dropdown.Item>
+              <Dropdown.Item href="#/action-3">Municipal</Dropdown.Item>
+            </Dropdown.Menu>
+          </Dropdown> */}
+        </div>
+      </div>
       <div
         className="d-flex flex-wrap"
         style={{
-          width: '100%', height: '100%', justifyContent: 'center',
+          width: '100%', height: '100%', gap: '20px', justifyContent: 'space-evenly', paddingBottom: '20px',
         }}
       >
-        {posts.length > 0 ? posts.map((post) => (
+        {(posts.length > 0) ? posts.map((post) => (
           <PostCard key={post.id} postObj={post} onUpdate={getAllThePosts} />
-        )) : <h5>There are no posts yet! <Link href="/post/edit/new">Create a Post!</Link></h5>}
+        )) : <div style={{ display: 'flex', width: '800px', justifyContent: 'center' }}><h5 style={{ marginRight: '5px' }}>No posts match your search.</h5><Link passHref href="/post/edit/new"><h5 className="clickableLink">Create a Post?</h5></Link></div>}
       </div>
     </>
   );

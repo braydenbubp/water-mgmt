@@ -8,12 +8,14 @@ import {
   Button,
 } from 'react-bootstrap';
 import { signOut } from '../utils/auth';
-// import droplet from '../public/water-mgmt-droplet.png';
+import { useAuth } from '../utils/context/authContext';
 
 export default function NavBar() {
+  const { user } = useAuth();
+
   return (
     <>
-      <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
+      <Navbar className="navbar-navbar" collapseOnSelect expand="lg" bg="dark" variant="dark">
         <Container>
           <Link passHref href="/">
             <Navbar.Brand>
@@ -25,7 +27,7 @@ export default function NavBar() {
             </Navbar.Brand>
           </Link>
           <Link passHref href="/">
-            <Navbar.Brand>Water Management</Navbar.Brand>
+            <Navbar.Brand className="navbar-brand">Water Management</Navbar.Brand>
           </Link>
           <Navbar.Toggle aria-controls="responsive-navbar-nav" />
           <Navbar.Collapse id="responsive-navbar-nav">
@@ -41,13 +43,13 @@ export default function NavBar() {
               }}
               >
                 <Link passHref href="/">
-                  <Nav.Link>Home</Nav.Link>
+                  <Nav.Link className="clickableLink">Home</Nav.Link>
                 </Link>
                 <Link passHref href="/post/edit/new">
-                  <Nav.Link>Add Post</Nav.Link>
+                  <Nav.Link className="clickableLink">Add Post</Nav.Link>
                 </Link>
-                <Link passHref href="/profile/profile">
-                  <Nav.Link>Profile</Nav.Link>
+                <Link passHref href={`/profile/${user.id}`}>
+                  <Nav.Link className="clickableLink">Profile</Nav.Link>
                 </Link>
               </div>
               <div style={{

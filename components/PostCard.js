@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import Link from 'next/link';
-import { ListGroup, ListGroupItem } from 'react-bootstrap';
+import { ButtonGroup } from 'react-bootstrap';
 import { deletePost } from '../api/postData';
 import { useAuth } from '../utils/context/authContext';
 
@@ -16,31 +16,48 @@ function PostCard({ postObj, onUpdate }) {
   const { user } = useAuth();
 
   return (
-    <Card style={{ width: '300px', margin: '15px' }}>
-      <Card.Img variant="top" src={postObj.image_url} alt={postObj.title} style={{ height: '300px' }} />
-      <Card.Body>
+    <Card className="post-card" style={{ width: '300px' }}>
+      <Card.Body style={{ padding: '10px', color: '#F6F6F6', paddingBottom: '5px' }}>
         <Card.Title>{postObj.title}</Card.Title>
-        {/* <Card.Subtitle>{postObj.category.label}</Card.Subtitle> */}
-        <Card.Text>{postObj.description}</Card.Text>
-        <ListGroup className="list-group-flush">
-          {/* <ListGroupItem>Likes: {postObj.likes}</ListGroupItem> */}
-          <ListGroupItem>Tags: {postObj.tags?.map((tag) => (
-            tag.label
-          )).join(', ')}
-          </ListGroupItem>
-        </ListGroup>
-        {/* DYNAMIC LINK TO VIEW THE POST DETAILS */}
-        <Link href={`/post/${postObj.id}`} passHref>
-          <Button variant="primary" className="m-2">View</Button>
-        </Link>
-        {/* DYNAMIC LINK TO EDIT THE POST DETAILS */}
-        {user.uid === postObj.user.uid ? (
-          <Link href={`/post/edit/${postObj.id}`} passHref>
-            <Button variant="primary" className="m-2">Edit</Button>
+        <div style={{
+          height: '280', width: '280', display: 'flex', margin: '10',
+        }}
+        >
+          <Card.Img variant="top" src={postObj.image_url} alt={postObj.title} style={{ height: '280px', width: '280px' }} />
+        </div>
+        <Card.Subtitle style={
+          {
+            marginTop: '0', textAlign: 'right', fontSize: '18px', fontWeight: '600', color: '#CDB47B',
+          }
+            }
+        >{postObj.category.label}
+        </Card.Subtitle>
+        <Card.Text style={{ marginBottom: '10px', fontSize: '16px' }}>{postObj.description}</Card.Text>
+        <div style={{ minHeight: '24px', marginBottom: '16px', fontSize: '14px' }}>
+          {/* {<p>Likes: {postObj.likes}} */}
+          {postObj.tags.length > 0 ? (
+            <p className="post-card-list-group">Tags: {postObj.tags?.map((tag) => (
+              tag.label
+            )).join(', ')}
+            </p>
+          ) : ''}
+        </div>
+        <ButtonGroup style={{ width: '100%', display: 'flex', alignItems: 'bottom' }}>
+          <Link href={`/post/${postObj.id}`} passHref>
+            <Button className="post-card-button">View</Button>
           </Link>
-        ) : ''}
-        {user.uid === postObj.user.uid ? <Button variant="danger" onClick={deleteThisPost} className="m-2">Delete</Button> : ''}
-        {/* <Card.Footer>Date posted: </Card.Footer> */}
+          {user.uid === postObj.user.uid ? (
+            <Link href={`/post/edit/${postObj.id}`} passHref>
+              <Button className="post-card-button">Edit</Button>
+            </Link>
+          ) : ''}
+          {user.uid === postObj.user.uid ? <Button className="delete-button post-card-button" onClick={deleteThisPost}>Delete</Button> : ''}
+        </ButtonGroup>
+        <Card.Footer style={{
+          fontSize: '12px', textAlign: 'right', padding: '0', marginTop: '5px',
+        }}
+        >Posted by <Link href={`/profile/${postObj.user?.id}`}>{postObj.user?.name}</Link>
+        </Card.Footer>
       </Card.Body>
     </Card>
   );
