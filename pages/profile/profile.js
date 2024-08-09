@@ -9,12 +9,14 @@ import { signOut } from '../../utils/auth';
 export default function Profile() {
   const { user } = useAuth();
   const [posts, setPosts] = useState([]);
-  const userPosts = () => {
+
+  const getUserPosts = () => {
     getPostsForSingleUser(user.uid).then(setPosts);
   };
+
   useEffect(() => {
-    userPosts();
-  });
+    getUserPosts();
+  }, []);
 
   return (
     <>
@@ -31,7 +33,7 @@ export default function Profile() {
       <h2>Posts</h2>
       <div className="d-flex flex-wrap" style={{ width: '100%' }}>
         {posts.map((post) => (
-          <PostCard key={post.uid} postObj={post} onUpdate={userPosts} />
+          <PostCard key={post.uid} postObj={post} onUpdate={getUserPosts} />
         ))}
       </div>
     </>

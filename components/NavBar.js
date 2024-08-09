@@ -8,47 +8,59 @@ import {
   Button,
 } from 'react-bootstrap';
 import { signOut } from '../utils/auth';
+// import droplet from '../public/water-mgmt-droplet.png';
 
 export default function NavBar() {
   return (
-    <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
-      <Container>
-        <Link passHref href="/">
-          <Navbar.Brand>Water Management</Navbar.Brand>
-        </Link>
-        <Navbar.Toggle aria-controls="responsive-navbar-nav" />
-        <Navbar.Collapse id="responsive-navbar-nav">
-          <Nav style={{
-            width: '100%',
-            display: 'flex',
-            justifyContent: 'space-between',
-          }}
-          >
-            {/* CLOSE NAVBAR ON LINK SELECTION: https://stackoverflow.com/questions/72813635/collapse-on-select-react-bootstrap-navbar-with-nextjs-not-working */}
-            <div style={{
+    <>
+      <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
+        <Container>
+          <Link passHref href="/">
+            <Navbar.Brand>
+              <img
+                src="/water-mgmt-droplet.png"
+                alt="Droplet, the Water Management Mascot!"
+                height="40px"
+              />
+            </Navbar.Brand>
+          </Link>
+          <Link passHref href="/">
+            <Navbar.Brand>Water Management</Navbar.Brand>
+          </Link>
+          <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+          <Navbar.Collapse id="responsive-navbar-nav">
+            <Nav style={{
+              width: '100%',
               display: 'flex',
+              justifyContent: 'space-between',
             }}
             >
-              <Link passHref href="/">
-                <Nav.Link>Home</Nav.Link>
-              </Link>
-              <Link passHref href="/post/edit/new">
-                <Nav.Link>Add Post</Nav.Link>
-              </Link>
-              <Link passHref href="/profile/profile">
-                <Nav.Link>Profile</Nav.Link>
-              </Link>
-            </div>
-            <div style={{
-              display: 'flex',
-              marginLeft: 'auto',
-            }}
-            >
-              <Button variant="danger" onClick={signOut}>Sign Out</Button>
-            </div>
-          </Nav>
-        </Navbar.Collapse>
-      </Container>
-    </Navbar>
+              {/* CLOSE NAVBAR ON LINK SELECTION: https://stackoverflow.com/questions/72813635/collapse-on-select-react-bootstrap-navbar-with-nextjs-not-working */}
+              <div style={{
+                display: 'flex',
+              }}
+              >
+                <Link passHref href="/">
+                  <Nav.Link>Home</Nav.Link>
+                </Link>
+                <Link passHref href="/post/edit/new">
+                  <Nav.Link>Add Post</Nav.Link>
+                </Link>
+                <Link passHref href="/profile/profile">
+                  <Nav.Link>Profile</Nav.Link>
+                </Link>
+              </div>
+              <div style={{
+                display: 'flex',
+                marginLeft: 'auto',
+              }}
+              >
+                <Button variant="danger" onClick={signOut}>Sign Out</Button>
+              </div>
+            </Nav>
+          </Navbar.Collapse>
+        </Container>
+      </Navbar>
+    </>
   );
 }
