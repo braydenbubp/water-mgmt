@@ -14,14 +14,13 @@ function CommentCard({ commentObj, onUpdate }) {
   const [cardText, setCardText] = useState(<Card.Text>{commentObj.content}</Card.Text>);
   const [commentUser, setCommentUser] = useState({});
   const [edit, setEdit] = useState(false);
+  const { user } = useAuth();
 
   useEffect(() => {
-    getSingleUser(commentObj.user).then((obj) => {
+    getSingleUser(user.uid).then((obj) => {
       setCommentUser(obj);
     });
-  }, [commentObj]);
-
-  const { user } = useAuth();
+  }, [user.uid]);
 
   const deleteThisComment = () => {
     if (window.confirm('Delete this comment?')) {
@@ -50,13 +49,13 @@ function CommentCard({ commentObj, onUpdate }) {
   return (
     <Card style={
       {
-        width: '300px', margin: '15px', background: 'none', display: 'flex', border: '1px solid black', radius: '5px', padding: '5px',
+        width: '400px', margin: '15px', background: 'none', display: 'flex', border: '1px solid #F6F6F6', radius: '5px', padding: '5px', color: '#F6F6F6',
       }
     }
     >
       <Card.Body style={{ display: 'flex', wrap: 'wrap', justify: 'space-between' }}>
         {cardText}
-        {user.uid === commentUser.uid && edit === false ? [DropdownButton].map((DropdownType, idx) => (
+        {commentObj.user === commentUser.id && edit === false ? [DropdownButton].map((DropdownType, idx) => (
           <DropdownType
             as={ButtonGroup}
             style={

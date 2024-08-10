@@ -24,7 +24,7 @@ export default function NavBar() {
             </Navbar.Brand>
           </Link>
           <Link passHref href="/">
-            <Navbar.Brand className="navbar-brand">Water Management</Navbar.Brand>
+            <Navbar.Brand className="navbar-brand">Water MGMT</Navbar.Brand>
           </Link>
           <Navbar.Toggle aria-controls="responsive-navbar-nav" />
           <Navbar.Collapse id="responsive-navbar-nav">
