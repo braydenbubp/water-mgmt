@@ -58,3 +58,10 @@ a {
 .post-card-button {
   background-color: #41B4EE;
 }
+
+.comment-card {
+  background-color: #7BD5EE;
+}
+label{
+  color: #171717;
+}

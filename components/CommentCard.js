@@ -5,6 +5,7 @@ import Card from 'react-bootstrap/Card';
 // import Link from 'next/link';
 // import { ListGroup } from 'react-bootstrap';
 import { ButtonGroup, Dropdown, DropdownButton } from 'react-bootstrap';
+import Link from 'next/link';
 import { deleteComment, updateComment } from '../api/commentData';
 import CommentForm from './Forms/CommentForm';
 import { useAuth } from '../utils/context/authContext';
@@ -48,9 +49,11 @@ function CommentCard({ commentObj, onUpdate }) {
   };
 
   return (
-    <Card style={
+    <Card
+      className="comment-card"
+      style={
       {
-        width: '400px', margin: '15px', background: 'none', display: 'flex', border: '1px solid black', radius: '5px', padding: '5px',
+        width: '400px', margin: '15px', display: 'flex', border: '1px solid black', radius: '5px', padding: '5px',
       }
     }
     >
@@ -75,6 +78,12 @@ function CommentCard({ commentObj, onUpdate }) {
             <Dropdown.Item onClick={deleteThisComment}>Delete</Dropdown.Item>
           </DropdownType>
         )) : ''}
+        <Card.Footer
+          style={{
+            fontSize: '12px', padding: '0', marginTop: '45px',
+          }}
+        >Posted by <Link href={`/profile/${user?.id}`}>{user?.name}</Link>
+        </Card.Footer>
       </Card.Body>
     </Card>
   );
