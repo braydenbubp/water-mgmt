@@ -30,7 +30,7 @@ function RegisterForm({ obj, user, updateUser }) {
     if (!obj.id) {
       registerUser(formData).then(() => updateUser(user.uid));
     } else {
-      updateUserProfile(formData).then(() => router.push(`/profile/${obj.id}`));
+      updateUserProfile(formData).then(() => router.push(`/profile/${obj.uid}`));
     }
   };
 

@@ -30,7 +30,7 @@ const getCommentsByPostId = (id) => new Promise((resolve, reject) => {
 
 // GET ALL COMMENTS MADE BY A SINGLE USER
 const getCommentsForSingleUser = (uid) => new Promise((resolve, reject) => {
-  fetch(`${endpoint}/comments?user=${uid}"`, {
+  fetch(`${endpoint}/comments?uid=${uid}"`, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',

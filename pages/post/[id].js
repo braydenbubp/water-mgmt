@@ -60,9 +60,8 @@ export default function ViewPost() {
         <h5>Category: {postDetails.category?.label}</h5>
         <p>Written by: {postDetails.user?.name}</p>
         <p>Description: {postDetails.description}</p>
-        <p>Likes: {postDetails.likes}</p>
-        <p>Tags: {postDetails.tags?.map((tag) => (
-          tag.label
+        <p>Tags: {postDetails.tags?.map((tag, index) => (
+          index === postDetails.tags.length - 1 ? tag.label : `${tag.label}, `
         ))}
         </p>
         <div>

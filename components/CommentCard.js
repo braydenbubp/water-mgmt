@@ -50,7 +50,7 @@ function CommentCard({ commentObj, onUpdate }) {
   return (
     <Card style={
       {
-        width: '400px', margin: '15px', background: 'none', display: 'flex', border: '1px solid black', radius: '5px', padding: '5px',
+        width: '300px', margin: '15px', background: 'none', display: 'flex', border: '1px solid black', radius: '5px', padding: '5px',
       }
     }
     >
