@@ -26,12 +26,11 @@ function PostCard({ postObj, onUpdate }) {
         </div>
         <Card.Subtitle style={
           {
-            marginTop: '0', textAlign: 'right', fontSize: '18px', fontWeight: '600', color: '#CDB47B',
+            marginTop: '5px', textAlign: 'right', fontSize: '18px', fontWeight: '600', color: '#CDB47B',
           }
             }
         >{postObj.category.label}
         </Card.Subtitle>
-        <Card.Text style={{ marginBottom: '10px', fontSize: '16px' }}>{postObj.description}</Card.Text>
         <div style={{ minHeight: '24px', marginBottom: '16px', fontSize: '14px' }}>
           {/* {<p>Likes: {postObj.likes}} */}
           {postObj.tags.length > 0 ? (
