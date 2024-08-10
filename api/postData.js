@@ -16,8 +16,8 @@ const getPosts = () => new Promise((resolve, reject) => {
 });
 
 // GET ALL POSTS MADE BY A SINGLE USER
-const getPostsForSingleUser = (id) => new Promise((resolve, reject) => {
-  fetch(`${endpoint}/posts?user.id=${id}`, {
+const getPostsForSingleUser = (uid) => new Promise((resolve, reject) => {
+  fetch(`${endpoint}/posts?uid=${uid}`, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
@@ -101,18 +101,18 @@ const searchPosts = (searchValue) => new Promise((resolve, reject) => {
 });
 
 // FILTER POSTS BY CATEGORY
-const filterPostsByCategory = (category) => new Promise((resolve, reject) => {
-  fetch(`${endpoint}/posts?category.label="${category}"`, {
-    method: 'GET',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-  })
-    .then((response) => response.json())
-    .then((data) => resolve(Object.values(data)))
-    .catch(reject);
-});
+// const filterPostsByCategory = (category) => new Promise((resolve, reject) => {
+//   fetch(`${endpoint}/posts?category.label="${category}"`, {
+//     method: 'GET',
+//     headers: {
+//       'Content-Type': 'application/json',
+//     },
+//   })
+//     .then((response) => response.json())
+//     .then((data) => resolve(Object.values(data)))
+//     .catch(reject);
+// });
 
 export {
-  getPosts, getPostsForSingleUser, getSinglePost, createPost, updatePost, deletePost, searchPosts, filterPostsByCategory,
+  getPosts, getPostsForSingleUser, getSinglePost, createPost, updatePost, deletePost, searchPosts,
 };

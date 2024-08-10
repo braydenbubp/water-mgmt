@@ -48,7 +48,7 @@ export default function NavBar() {
                 <Link passHref href="/post/edit/new">
                   <Nav.Link className="clickableLink">Add Post</Nav.Link>
                 </Link>
-                <Link passHref href={`/profile/${user.id}`}>
+                <Link passHref href={`/profile/${user.uid}`}>
                   <Nav.Link className="clickableLink">Profile</Nav.Link>
                 </Link>
               </div>
