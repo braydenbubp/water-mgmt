@@ -5,7 +5,7 @@
 - [The Problem](#the-problem)
 - [The Solution](#the-solution)
 - [Features](#features)
-- [Snippets of website](#snippets-of-website)
+- [Screenshots of website](#screenshots-of-website)
 - [Contributors](#contributors)
 
 ## Getting Started
@@ -15,11 +15,10 @@
 4. To start the app run "npm run dev" and open http://localhost:3000/ in your browser
 
 ## The Problem 
-People and Businesses waste too much water and need a way to share tips on how to save water.
+People and equipment waste too much water, and we need a way to share tips on how to save water, and bring down costs in doing so.
 
 ## The Solution 
-An app to create and share posts about saving water, with the ability to filter by category and tags.
-
+An app to create and share posts about saving water through better habits, as well as equipment upgrades, thus promoting a healthier ecosystem by creating less waste.
 ## Features
 - Users will be able to view all Posts on saving water on the DOM
 - Users can search by category or by post name in the search bar
@@ -28,7 +27,7 @@ An app to create and share posts about saving water, with the ability to filter 
 - Users can comment on Posts
 - Users can only Delete or Edit Posts made by them
 
-### Snippets of website
+### Screenshots of website
 
 ### Relevant links
 
