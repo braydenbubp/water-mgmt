@@ -28,7 +28,7 @@ function Signin() {
           style={{ marginTop: '80px' }}
         />
       </div>
-      <h3 style={{ marginBottom: '20px' }}>Hi, I&apos;m Droplet!  Welcome to Water Management!</h3>
+      <h3 style={{ marginBottom: '20px' }}>Hi, I&apos;m Droplet!  Welcome to Water MGMT!</h3>
       <p style={{ color: '#F6F6F6' }}>In this app you will find all things water management. Sign in below to get started!</p>
       <Button type="button" variant="success" size="lg" className="copy-btn" onClick={signIn}>
         Sign in
