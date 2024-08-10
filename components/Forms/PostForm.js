@@ -2,6 +2,7 @@ import { useRouter } from 'next/router';
 import PropTypes from 'prop-types';
 import { React, useEffect, useState } from 'react';
 import { Button, FloatingLabel, Form } from 'react-bootstrap';
+// eslint-disable-next-line import/no-extraneous-dependencies
 import CreatableSelect from 'react-select/creatable';
 import { useAuth } from '../../utils/context/authContext';
 import { createPost, updatePost } from '../../api/postData';
