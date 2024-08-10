@@ -25,7 +25,7 @@ export default function Profile() {
           <Card.Title>{user.name}</Card.Title>
           {/* <Link href="/profile/new" passHref>
             <Button variant="primary" className="m-2">Edit</Button>
-          </Link> */}
+            </Link> */}
           <p className="card-text bold">Bio: {user.bio}</p>
           <div style={{ display: 'flex', justifyContent: 'right' }}><Button variant="danger" onClick={signOut}>Sign Out</Button></div>
         </Card.Body>
