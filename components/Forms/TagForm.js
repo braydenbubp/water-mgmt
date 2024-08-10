@@ -62,7 +62,7 @@ export default function TagForm({ obj, tagPostId, onSubmit }) {
       });
     }
   };
-  console.warn(tags);
+
   return (
     <Form onSubmit={handleSubmit}>
       <h4 className="text-white mt-5">{obj.id ? 'Update' : 'Add'} Tag</h4>

@@ -20,20 +20,20 @@ export default function Profile() {
 
   return (
     <>
-      <Card style={{ width: '15rem', margin: '10px' }}>
+      <Card style={{ width: '15rem', marginTop: '20px' }}>
         <Card.Body>
           <Card.Title>{user.name}</Card.Title>
           {/* <Link href="/profile/new" passHref>
             <Button variant="primary" className="m-2">Edit</Button>
           </Link> */}
-          <p className="card-text bold">Bio {user.bio}</p>
+          <p className="card-text bold">Bio: {user.bio}</p>
           <div style={{ display: 'flex', justifyContent: 'right' }}><Button variant="danger" onClick={signOut}>Sign Out</Button></div>
         </Card.Body>
       </Card>
-      <h2>Posts</h2>
-      <div className="d-flex flex-wrap" style={{ width: '100%' }}>
+      <h5 style={{ marginTop: '30px' }}>Posts by {user.name}:</h5>
+      <div className="d-flex flex-wrap" style={{ width: '100%', gap: '20px' }}>
         {posts.map((post) => (
-          <PostCard key={post.uid} postObj={post} onUpdate={getUserPosts} />
+          <PostCard key={post.id} postObj={post} onUpdate={getUserPosts} />
         ))}
       </div>
     </>

@@ -47,13 +47,13 @@ export default function ViewPost() {
   return (
     <div className="mt-5 d-flex flex-wrap">
       <div className="d-flex flex-column">
-        <img src={postDetails.image_url} alt={postDetails.title} style={{ width: '300px', marginBottom: '10px' }} />
+        <img src={postDetails.image_url} alt={postDetails.title} style={{ width: '400px', maxHeight: '600px', marginBottom: '10px' }} />
         {user.uid === postDetails.user?.uid ? (
           <Link href={`/post/edit/${id}`} passHref>
-            <Button variant="primary" className="m-2">Edit Post</Button>
+            <Button className="post-card-button" style={{ marginBottom: '15px' }}>Edit Post</Button>
           </Link>
         ) : ''}
-        {user.uid === postDetails.user?.uid ? <Button variant="danger" onClick={deleteThisPost} className="m-2">Delete Post</Button> : ''}
+        {user.uid === postDetails.user?.uid ? <Button onClick={deleteThisPost} className="post-card-button delete-button">Delete Post</Button> : ''}
       </div>
       <div className="text-white ms-5 details">
         <h3>{postDetails.title}</h3>

@@ -17,7 +17,6 @@ function CommentCard({ commentObj, onUpdate }) {
 
   useEffect(() => {
     getSingleUser(commentObj.user).then((obj) => {
-      console.warn(obj);
       setCommentUser(obj);
     });
   }, [commentObj]);

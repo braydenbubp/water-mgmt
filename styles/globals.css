@@ -7,6 +7,8 @@ body {
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
   height: 100%;
+  color: #D5DEF6;
+  background-color: #208BAC;
 }
 
 a {
@@ -18,8 +20,41 @@ a {
   box-sizing: border-box;
 }
 
-body {
-  background-color: #88effd;
-  /* background-image: url("img/water.jpg"); */
-  background-repeat: no-repeat;
+/* body {
+ background-image: url("img/water.jpg");
+ background-repeat: no-repeat;
+} */
+
+.clickableLink {
+  color: #41B4EE;
+}
+
+.clickableLink:hover {
+  color: #F6E6AC;
+  cursor: pointer;
+}
+
+.navbar-navbar {
+  background-color: #D5DEF6;
+}
+
+.navbar-brand {
+  color: #7BD5EE;
+}
+
+.post-card {
+  background-color: #1717170f;
+  border: 1px solid #186294;
+}
+
+.post-card-list-group {
+  background-color: none;
+}
+
+.delete-button:hover {
+  color: rgb(255, 95, 95);
+}
+
+.post-card-button {
+  background-color: #41B4EE;
 }
