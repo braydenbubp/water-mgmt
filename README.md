@@ -28,6 +28,8 @@ An app to create and share posts about saving water through better habits, as we
 - Users can only Delete or Edit Posts made by them
 
 ### Screenshots of website
+![Home Page](image.png)
+![Profile page](image-1.png)
 
 ### Relevant links
 
