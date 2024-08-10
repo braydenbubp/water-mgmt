@@ -163,7 +163,6 @@ export default function PostForm({ obj }) {
         name="tags"
         className="mb-3"
         value={[...selectedTags, ...newTags]}
-        required
         isMulti
         onChange={handleTagChange}
         options={

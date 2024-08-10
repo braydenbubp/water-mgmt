@@ -1,8 +1,6 @@
 /* eslint-disable import/no-extraneous-dependencies */
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from 'react';
-// import { Button } from 'react-bootstrap';
-// import { signOut } from '../utils/auth';
 import Link from 'next/link';
 import { Form } from 'react-bootstrap';
 import { ImSearch } from 'react-icons/im';
@@ -12,7 +10,6 @@ import PostCard from '../components/PostCard';
 
 function Home() {
   const [posts, setPosts] = useState([]);
-  // const [currentFilter, setCurrentFilter] = useState({});
   const { user } = useAuth();
 
   const getAllThePosts = () => {
@@ -22,12 +19,6 @@ function Home() {
   useEffect(() => {
     getAllThePosts();
   }, []);
-
-  // const filterThePosts = (filter) => {
-  //   filterPostsByCategory(filter).then((filteredPosts) => {
-  //     setPosts(filteredPosts);
-  //   });
-  // };
 
   const searchForPosts = (e) => {
     searchPosts(e.target.value).then((filteredPosts) => {
@@ -55,17 +46,6 @@ function Home() {
               required
             />
           </Form>
-          {/* <Dropdown>
-            <Dropdown.Toggle variant="info" id="dropdown-basic">
-              Filter
-            </Dropdown.Toggle>
-
-            <Dropdown.Menu>
-              <Dropdown.Item onSelect={filterThePosts('personal')}>Personal</Dropdown.Item>
-              <Dropdown.Item href="#/action-2">Business</Dropdown.Item>
-              <Dropdown.Item href="#/action-3">Municipal</Dropdown.Item>
-            </Dropdown.Menu>
-          </Dropdown> */}
         </div>
       </div>
       <div

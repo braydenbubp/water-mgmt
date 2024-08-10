@@ -4,7 +4,6 @@ import { useRouter } from 'next/router';
 import Link from 'next/link';
 import PostCard from '../../components/PostCard';
 import { getPostsForSingleUser } from '../../api/postData';
-import { signOut } from '../../utils/auth';
 import { getSingleUser } from '../../api/userData';
 import { useAuth } from '../../utils/context/authContext';
 
@@ -43,13 +42,12 @@ export default function Profile() {
           </Link> */}
           <p className="card-text bold">Bio: {userDetails.bio}</p>
           <div style={{ display: 'flex', justifyContent: 'right' }}>
-            {userDetails.uid === user.uid ? <Link href={`/profile/edit/${id}`} passHref><Button variant="secondary">Edit</Button></Link> : ''}
-            {userDetails.uid === user.uid ? <Button variant="danger" onClick={signOut}>Sign Out</Button> : ''}
+            {userDetails.uid === user.uid ? <Link href={`/profile/edit/${id}`} passHref><Button style={{ backgroundColor: '#41B4EE' }}>Edit</Button></Link> : ''}
           </div>
         </Card.Body>
       </Card>
       <h5 style={{ marginTop: '30px' }}>Posts by {userDetails.name}:</h5>
-      <div className="d-flex flex-wrap" style={{ width: '100%', gap: '20px' }}>
+      <div className="d-flex flex-wrap" style={{ width: '100%', gap: '20px', paddingBottom: '20px' }}>
         {posts.map((post) => (
           <PostCard key={post.id} postObj={post} onUpdate={getUserPosts} />
         ))}

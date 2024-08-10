@@ -55,7 +55,7 @@ function PostCard({ postObj, onUpdate }) {
         <Card.Footer style={{
           fontSize: '12px', textAlign: 'right', padding: '0', marginTop: '5px',
         }}
-        >Posted by <Link href={`/profile/${postObj.user?.uid}`}>{postObj.user?.name}</Link>
+        >Posted by <Link href={`/profile/${postObj.user?.id}`}>{postObj.user?.name}</Link>
         </Card.Footer>
       </Card.Body>
     </Card>

@@ -24,12 +24,12 @@ function Signin() {
         <img
           src="/water-mgmt-droplet.png"
           alt="Droplet, the Water Management Mascot!"
-          width="600px"
-          // style={{ marginBottom: '20px' }}
+          width="300px"
+          style={{ marginTop: '80px' }}
         />
       </div>
-      <h1 style={{ marginBottom: '20px' }}>Hi, I&apos;m Droplet!  Welcome to Water Management!</h1>
-      <p>In this app you will find all things water management. Sign in below to get started!</p>
+      <h3 style={{ marginBottom: '20px' }}>Hi, I&apos;m Droplet!  Welcome to Water Management!</h3>
+      <p style={{ color: '#F6F6F6' }}>In this app you will find all things water management. Sign in below to get started!</p>
       <Button type="button" variant="success" size="lg" className="copy-btn" onClick={signIn}>
         Sign in
       </Button>

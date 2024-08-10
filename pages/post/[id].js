@@ -55,7 +55,7 @@ export default function ViewPost() {
         ) : ''}
         {user.uid === postDetails.user?.uid ? <Button onClick={deleteThisPost} className="post-card-button delete-button">Delete Post</Button> : ''}
       </div>
-      <div className="text-white ms-5 details">
+      <div className="text-white ms-5 details" style={{ width: '400px' }}>
         <h3>{postDetails.title}</h3>
         <h5>Category: {postDetails.category?.label}</h5>
         <p>Written by: {postDetails.user?.name}</p>
@@ -69,9 +69,9 @@ export default function ViewPost() {
           {comments.map((comment) => (
             <CommentCard key={comment.id} commentObj={comment} onUpdate={getCommentsByPost} />
           ))}
-          <Accordion style={{ width: '400px', margin: '15px' }} flush>
+          <Accordion style={{ width: '400px', margin: '15px', backgroundColor: 'black' }} flush>
             <Accordion.Item eventKey="0">
-              <Accordion.Header><h5>Leave a Comment</h5></Accordion.Header>
+              <Accordion.Header><h5 style={{ color: 'black' }}>Leave a Comment</h5></Accordion.Header>
               <Accordion.Body>
                 <CommentForm commentPostId={postId} onSubmit={getCommentsByPost} />
               </Accordion.Body>
