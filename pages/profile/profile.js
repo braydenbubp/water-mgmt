@@ -2,15 +2,15 @@ import { Button, Card } from 'react-bootstrap';
 import { useEffect, useState } from 'react';
 // import Link from 'next/link';
 import Link from 'next/link';
-import { useRouter } from 'next/router';
+// import { useRouter } from 'next/router';
 import { useAuth } from '../../utils/context/authContext';
 import PostCard from '../../components/PostCard';
 import { getPostsForSingleUser } from '../../api/postData';
 import { getSingleUser } from '../../api/userData';
 
 export default function Profile() {
-  const router = useRouter();
-  const { id } = router.query;
+  // const router = useRouter();
+  // const { id } = router.query;
   const { user } = useAuth();
   const [posts, setPosts] = useState([]);
   const [userDetails, setUserDetails] = useState({});
@@ -43,7 +43,7 @@ export default function Profile() {
           </Link> */}
           <p className="card-text bold">Bio: {userDetails.bio}</p>
           <div style={{ display: 'flex', justifyContent: 'right' }}>
-            {userDetails.uid === user.uid ? <Link href={`/profile/edit/${id}`} passHref><Button variant="secondary">Edit</Button></Link> : ''}
+            {userDetails.uid === user.uid ? <Link href={`/profile/edit/${user.uid}`} passHref><Button variant="secondary">Edit</Button></Link> : ''}
           </div>
         </Card.Body>
       </Card>
